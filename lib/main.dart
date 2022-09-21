@@ -1,3 +1,5 @@
+import 'package:carteira/cadastro/cadastro_page.dart';
+import 'package:carteira/dados/dados_page.dart';
 import 'package:carteira/pages/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'pages/splash/splash_page.dart';
@@ -17,6 +19,8 @@ class App extends StatelessWidget {
       routes: {
         '/splash': (_) => const SplashPage(),
         '/login': (_) => const LoginPage(),
+        '/cadastro': (_) => const CadastroPage(),
+        '/dados': (_) => const DadosPage(),
       },
       // home: HomePage(),
     );

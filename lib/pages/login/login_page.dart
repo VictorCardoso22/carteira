@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 16),
               CustomPrimaryButton(
                 onPressed: () {
-                  print("teste essa desgraça");
+                  Navigator.of(context).pushNamed('/cadastro');
                 },
                 titulo: 'Solicitar minha carteirinha',
               ),
