@@ -1,3 +1,4 @@
+import 'package:carteira/pages/dados/pages/dados_pessoais_page.dart';
 import 'package:flutter/material.dart';
 
 class DadosPage extends StatefulWidget {
@@ -47,31 +48,12 @@ class _DadosPageState extends State<DadosPage> {
                   onStepTapped: (step) => tapped(step),
                   onStepContinue: continued,
                   onStepCancel: cancel,
-                  // onStepCancel: () {
-                  //   if (_index > 0) {
-                  //     setState(() {
-                  //       _index -= 1;
-                  //     });
-                  //   }
-                  // },
-                  // onStepContinue: () {
-                  //   // if (_index <= 0) {
-                  //   setState(() {
-                  //     _index += 1;
-                  //   });
-                  //   // }
-                  // },
-                  // onStepTapped: (int index) {
-                  //   setState(() {
-                  //     _index = index;
-                  //   });
-                  // },
                   steps: <Step>[
                     Step(
                       title: const Text('Pessoal'),
                       content: Container(
                         alignment: Alignment.centerLeft,
-                        child: const Text('Content for Step 1'),
+                        child: DadosPessoaisPage(),
                       ),
                       isActive: _index >= 0,
                       state:

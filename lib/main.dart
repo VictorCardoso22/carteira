@@ -1,7 +1,7 @@
-import 'package:carteira/cadastro/cadastro_page.dart';
-import 'package:carteira/dados/dados_page.dart';
 import 'package:carteira/pages/login/login_page.dart';
 import 'package:flutter/material.dart';
+import 'pages/cadastro/cadastro_page.dart';
+import 'pages/dados/dados_page.dart';
 import 'pages/splash/splash_page.dart';
 
 void main() {
