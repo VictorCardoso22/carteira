@@ -1,4 +1,6 @@
+import 'package:carteira/pages/dados/pages/anexo_page.dart';
 import 'package:carteira/pages/dados/pages/dados_pessoais_page.dart';
+import 'package:carteira/pages/dados/pages/instituicao_page.dart';
 import 'package:flutter/material.dart';
 
 class DadosPage extends StatefulWidget {
@@ -61,14 +63,20 @@ class _DadosPageState extends State<DadosPage> {
                     ),
                     Step(
                       title: Text('Instituição'),
-                      content: Text('Content for Step 2'),
+                      content: Container(
+                        alignment: Alignment.centerLeft,
+                        child: InstituicaoPage(),
+                      ),
                       isActive: _index >= 0,
                       state:
                           _index >= 1 ? StepState.complete : StepState.disabled,
                     ),
                     Step(
                       title: Text('Anexos'),
-                      content: Text('Content for Step 3'),
+                      content: Container(
+                        alignment: Alignment.centerLeft,
+                        child: AnexoPage(),
+                      ),
                       isActive: _index >= 0,
                       state:
                           _index >= 2 ? StepState.complete : StepState.disabled,

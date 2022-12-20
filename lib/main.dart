@@ -1,5 +1,6 @@
 import 'package:carteira/pages/login/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'pages/cadastro/cadastro_page.dart';
 import 'pages/dados/dados_page.dart';
 import 'pages/splash/splash_page.dart';
@@ -13,7 +14,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Carteira de estudante',
       initialRoute: '/splash',
       routes: {
