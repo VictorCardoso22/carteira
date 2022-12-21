@@ -23,6 +23,7 @@ class App extends StatelessWidget {
         '/cadastro': (_) => const CadastroPage(),
         '/dados': (_) => const DadosPage(),
       },
+      debugShowCheckedModeBanner: false,
       // home: HomePage(),
     );
   }

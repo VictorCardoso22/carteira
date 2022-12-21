@@ -20,7 +20,9 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           // width: 328,
           child: TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
               labelText: 'CPF',
             ),
           ),
@@ -30,7 +32,9 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           // width: 328,
           child: TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
               labelText: 'Nome completo',
             ),
           ),
@@ -40,7 +44,9 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           // width: 328,
           child: TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
               labelText: 'Data de nascimento',
             ),
           ),
@@ -51,20 +57,24 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           children: [
             Expanded(
               flex: 3,
-              // width: 282,
+              // width: 296,
               child: TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
                   labelText: 'RG',
                 ),
               ),
             ),
-            SizedBox(width: 8),
+            SizedBox(width: 18),
             Expanded(
-              // width: 38,
+              // width: 90,
               child: TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
                   labelText: 'Emissor',
                 ),
               ),
@@ -80,16 +90,25 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               // width: 282,
               child: TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
                   labelText: 'CEP',
                 ),
               ),
             ),
-            SizedBox(width: 8),
-            Expanded(
-              // width: 38,
-              child: ElevatedButton.icon(
-                  onPressed: () {}, icon: Icon(Icons.search), label: Text("")),
+            SizedBox(width: 18),
+            Container(
+              width: 52,
+              height: 52,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.search),
+              ),
             ),
           ],
         ),
@@ -98,7 +117,9 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           // width: 328,
           child: TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
               labelText: 'Logradouro',
             ),
           ),
@@ -112,17 +133,21 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               // width: 282,
               child: TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
                   labelText: 'Bairro',
                 ),
               ),
             ),
-            SizedBox(width: 8),
+            SizedBox(width: 18),
             Expanded(
               // width: 38,
               child: TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
                   labelText: 'Nº',
                 ),
               ),
@@ -134,7 +159,9 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           // width: 328,
           child: TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
               labelText: 'Complemento',
             ),
           ),
@@ -144,7 +171,9 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           // width: 328,
           child: TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
               labelText: 'Email',
             ),
           ),
@@ -154,7 +183,9 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           // width: 328,
           child: TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
               labelText: 'Senha',
             ),
           ),

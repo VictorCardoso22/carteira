@@ -1,5 +1,6 @@
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CadastroPage extends StatelessWidget {
   const CadastroPage({Key? key}) : super(key: key);
@@ -10,19 +11,23 @@ class CadastroPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.all(22),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 38),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(height: 20),
               Align(
                 alignment: Alignment.topLeft,
-                child: TextButton.icon(
+                child: IconButton(
                   onPressed: () {
-                    Navigator.of(context).popAndPushNamed("/login");
+                    Get.back();
+                    // Navigator.of(context).popAndPushNamed("/cadastro");
                   },
-                  icon: const Icon(Icons.close),
-                  label: const Text(""),
+                  icon: const Icon(
+                    Icons.close,
+                    color: Color(0xFF747474),
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -41,7 +46,9 @@ class CadastroPage extends StatelessWidget {
                   width: 328,
                   child: TextField(
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
                       labelText: 'CPF',
                     ),
                   ),
@@ -55,7 +62,8 @@ class CadastroPage extends StatelessWidget {
                   child: CustomPrimaryButton(
                     small: true,
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/dados');
+                      // Navigator.of(context).pushNamed('/dados');
+                      Get.toNamed('/dados');
                     },
                     titulo: 'Avançar',
                   ),

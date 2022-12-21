@@ -18,7 +18,9 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
           // width: 328,
           child: TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
               labelText: 'Instituição de Ensino',
             ),
           ),
@@ -28,7 +30,9 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
           // width: 328,
           child: TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
               labelText: 'Matricula',
             ),
           ),
