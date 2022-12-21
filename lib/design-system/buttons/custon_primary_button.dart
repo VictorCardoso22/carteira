@@ -1,3 +1,4 @@
+import 'package:carteira/design-system/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomPrimaryButton extends StatelessWidget {
@@ -26,8 +27,8 @@ class CustomPrimaryButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         fixedSize: _small == false ? const Size(328, 53) : Size(153, 53),
-        primary: Color(0xFF747474),
-        onPrimary: Color(0xFFffffff),
+        primary: kPrimaryColor,
+        onPrimary: kPrimaryLightColor,
       ),
     );
   }

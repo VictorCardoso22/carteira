@@ -38,6 +38,18 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
           ),
         ),
         SizedBox(height: 8),
+        SizedBox(
+          // width: 328,
+          child: TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              labelText: 'Turno',
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
       ],
     );
   }

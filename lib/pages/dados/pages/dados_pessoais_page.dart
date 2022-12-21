@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:carteira/design-system/components/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class DadosPessoaisPage extends StatefulWidget {
   const DadosPessoaisPage({Key? key}) : super(key: key);
@@ -102,12 +101,15 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: Colors.grey,
+                color: kPrimaryColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.search),
+                icon: Icon(
+                  Icons.search,
+                  color: kPrimaryLightColor,
+                ),
               ),
             ),
           ],
@@ -190,7 +192,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
             ),
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 20),
       ],
     );
   }

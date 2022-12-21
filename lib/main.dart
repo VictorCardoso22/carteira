@@ -1,3 +1,4 @@
+import 'package:carteira/design-system/components/constants.dart';
 import 'package:carteira/pages/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,6 +25,18 @@ class App extends StatelessWidget {
         '/dados': (_) => const DadosPage(),
       },
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        // Define the default brightness and colors.
+        brightness: Brightness.light,
+        primaryColor: kPrimaryColor,
+
+        colorScheme: const ColorScheme.light(
+          primary: kPrimaryColor,
+        ),
+
+        // Define the default font family.
+        fontFamily: 'Roboto Condensed',
+      ),
       // home: HomePage(),
     );
   }

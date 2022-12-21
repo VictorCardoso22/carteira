@@ -1,4 +1,5 @@
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
+import 'package:carteira/design-system/components/constants.dart';
 import 'package:carteira/pages/dados/pages/anexo_page.dart';
 import 'package:carteira/pages/dados/pages/dados_pessoais_page.dart';
 import 'package:carteira/pages/dados/pages/instituicao_page.dart';
@@ -24,8 +25,8 @@ class _DadosPageState extends State<DadosPage> {
             )
           : Theme(
               data: Theme.of(context).copyWith(
-                  colorScheme: ColorScheme.light(
-                primary: Color(0xFF747474),
+                  colorScheme: const ColorScheme.light(
+                primary: kPrimaryColor,
               )),
               child: SingleChildScrollView(
                 child: Container(
@@ -35,39 +36,39 @@ class _DadosPageState extends State<DadosPage> {
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Get.back();
-                                // Navigator.of(context).popAndPushNamed("/cadastro");
-                              },
-                              icon: const Icon(
-                                Icons.close,
-                                color: Color(0xFF747474),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Get.back();
+                              // Navigator.of(context).popAndPushNamed("/cadastro");
+                            },
+                            icon: const Icon(
+                              Icons.close,
+                              color: kPrimaryColor,
+                            ),
+                          ),
+                          const SizedBox(width: 100),
+                          const Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Cadastro',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: kPrimaryDarkColor,
                               ),
                             ),
-                            const SizedBox(width: 100),
-                            const Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Cadastro',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 30),
                       Expanded(
                         child: Stepper(
                           elevation: 0,
                           type: StepperType.horizontal,
-                          physics: ScrollPhysics(),
+                          physics: const ScrollPhysics(),
                           currentStep: _index,
                           onStepTapped: (step) => tapped(step),
                           onStepContinue: () {
@@ -82,58 +83,20 @@ class _DadosPageState extends State<DadosPage> {
                           },
                           onStepCancel: cancel,
                           steps: getSteps(),
-                          controlsBuilder: (context, details) => Container(
-                            child: Column(
-                              children: [
-                                CustomPrimaryButton(
-                                    titulo: _index == getSteps().length - 1
-                                        ? 'Enviar'
-                                        : 'Avancar',
-                                    onPressed: details.onStepContinue!),
-                                if (_index != 0)
-                                  TextButton(
-                                      onPressed: details.onStepCancel!,
-                                      child: Text('Voltar')),
-                              ],
-                            ),
+                          controlsBuilder: (context, details) => Column(
+                            children: [
+                              CustomPrimaryButton(
+                                  titulo: _index == getSteps().length - 1
+                                      ? 'Enviar'
+                                      : 'Avançar',
+                                  onPressed: details.onStepContinue!),
+                              const SizedBox(height: 10),
+                              if (_index != 0)
+                                TextButton(
+                                    onPressed: details.onStepCancel!,
+                                    child: const Text('Voltar')),
+                            ],
                           ),
-
-                          //  (BuildContext context, {continued, cancel}) {
-                          //   return Container();
-                          // },
-
-                          //  <Step>[
-                          //   Step(
-                          //     title: const Text('Pessoal'),
-                          //     content: Container(
-                          //       alignment: Alignment.centerLeft,
-                          //       child: DadosPessoaisPage(),
-                          //     ),
-                          //     isActive: _index >= 0,
-                          //     state:
-                          //         _index >= 0 ? StepState.complete : StepState.disabled,
-                          //   ),
-                          //   Step(
-                          //     title: Text('Instituição'),
-                          //     content: Container(
-                          //       alignment: Alignment.centerLeft,
-                          //       child: InstituicaoPage(),
-                          //     ),
-                          //     isActive: _index >= 0,
-                          //     state:
-                          //         _index >= 1 ? StepState.complete : StepState.disabled,
-                          //   ),
-                          //   Step(
-                          //     title: Text('Anexos'),
-                          //     content: Container(
-                          //       alignment: Alignment.centerLeft,
-                          //       child: AnexoPage(),
-                          //     ),
-                          //     isActive: _index >= 0,
-                          //     state:
-                          //         _index >= 2 ? StepState.complete : StepState.disabled,
-                          //   ),
-                          // ],
                         ),
                       )
                     ],

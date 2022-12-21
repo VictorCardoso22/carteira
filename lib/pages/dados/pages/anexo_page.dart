@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera_camera/camera_camera.dart';
+import 'package:carteira/design-system/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -45,7 +46,7 @@ class _AnexoPageState extends State<AnexoPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-                style: BorderStyle.solid, width: 1, color: Colors.black26),
+                style: BorderStyle.solid, width: 1, color: kPrimaryLightColor),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           child: Stack(
@@ -59,12 +60,12 @@ class _AnexoPageState extends State<AnexoPage> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: kPrimaryLightColor,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Text(
                           'Foto',
-                          style: TextStyle(color: Colors.white70),
+                          style: TextStyle(color: kPrimaryDarkColor),
                         )),
                   ),
                   Spacer(),
@@ -75,7 +76,7 @@ class _AnexoPageState extends State<AnexoPage> {
                         width: 42,
                         height: 42,
                         decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: kPrimaryLightColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: IconButton(
@@ -86,7 +87,7 @@ class _AnexoPageState extends State<AnexoPage> {
                               )),
                           icon: const Icon(
                             Icons.camera_alt,
-                            color: Colors.white70,
+                            color: kPrimaryDarkColor,
                           ),
                           // child: Text("Tire uma Foto"),
                         ),
@@ -96,7 +97,7 @@ class _AnexoPageState extends State<AnexoPage> {
                         width: 42,
                         height: 42,
                         decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: kPrimaryLightColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: IconButton(
@@ -104,7 +105,7 @@ class _AnexoPageState extends State<AnexoPage> {
 
                           icon: const Icon(
                             Icons.drive_file_move_rounded,
-                            color: Colors.white70,
+                            color: kPrimaryDarkColor,
                           ),
                           // child: Text("Anexar imagem"),
                         ),
@@ -125,7 +126,9 @@ class _AnexoPageState extends State<AnexoPage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                    style: BorderStyle.solid, width: 1, color: Colors.black26),
+                    style: BorderStyle.solid,
+                    width: 1,
+                    color: kPrimaryLightColor),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
               child: Stack(
@@ -139,12 +142,12 @@ class _AnexoPageState extends State<AnexoPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: Colors.black87,
+                              color: kPrimaryLightColor,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Text(
                               'RG - Frente',
-                              style: TextStyle(color: Colors.white70),
+                              style: TextStyle(color: kPrimaryDarkColor),
                             )),
                       ),
                       Spacer(),
@@ -155,7 +158,7 @@ class _AnexoPageState extends State<AnexoPage> {
                             width: 38,
                             height: 38,
                             decoration: BoxDecoration(
-                              color: Colors.black87,
+                              color: kPrimaryLightColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: IconButton(
@@ -166,7 +169,7 @@ class _AnexoPageState extends State<AnexoPage> {
                                   )),
                               icon: const Icon(
                                 Icons.camera_alt,
-                                color: Colors.white70,
+                                color: kPrimaryDarkColor,
                               ),
                               // child: Text("Tire uma Foto"),
                             ),
@@ -176,7 +179,7 @@ class _AnexoPageState extends State<AnexoPage> {
                             width: 38,
                             height: 38,
                             decoration: BoxDecoration(
-                              color: Colors.black87,
+                              color: kPrimaryLightColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: IconButton(
@@ -184,7 +187,7 @@ class _AnexoPageState extends State<AnexoPage> {
 
                               icon: const Icon(
                                 Icons.drive_file_move_rounded,
-                                color: Colors.white70,
+                                color: kPrimaryDarkColor,
                               ),
                               // child: Text("Anexar imagem"),
                             ),
@@ -203,7 +206,9 @@ class _AnexoPageState extends State<AnexoPage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                    style: BorderStyle.solid, width: 1, color: Colors.black26),
+                    style: BorderStyle.solid,
+                    width: 1,
+                    color: kPrimaryLightColor),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
               child: Stack(
@@ -217,12 +222,12 @@ class _AnexoPageState extends State<AnexoPage> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: Colors.black87,
+                              color: kPrimaryLightColor,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Text(
                               'RG - Verso',
-                              style: TextStyle(color: Colors.white70),
+                              style: TextStyle(color: kPrimaryDarkColor),
                             )),
                       ),
                       Spacer(),
@@ -233,7 +238,7 @@ class _AnexoPageState extends State<AnexoPage> {
                             width: 38,
                             height: 38,
                             decoration: BoxDecoration(
-                              color: Colors.black87,
+                              color: kPrimaryLightColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: IconButton(
@@ -244,7 +249,7 @@ class _AnexoPageState extends State<AnexoPage> {
                                   )),
                               icon: const Icon(
                                 Icons.camera_alt,
-                                color: Colors.white70,
+                                color: kPrimaryDarkColor,
                               ),
                               // child: Text("Tire uma Foto"),
                             ),
@@ -254,7 +259,7 @@ class _AnexoPageState extends State<AnexoPage> {
                             width: 38,
                             height: 38,
                             decoration: BoxDecoration(
-                              color: Colors.black87,
+                              color: kPrimaryLightColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: IconButton(
@@ -262,7 +267,7 @@ class _AnexoPageState extends State<AnexoPage> {
 
                               icon: const Icon(
                                 Icons.drive_file_move_rounded,
-                                color: Colors.white70,
+                                color: kPrimaryDarkColor,
                               ),
                               // child: Text("Anexar imagem"),
                             ),
@@ -284,7 +289,7 @@ class _AnexoPageState extends State<AnexoPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-                style: BorderStyle.solid, width: 1, color: Colors.black26),
+                style: BorderStyle.solid, width: 1, color: kPrimaryLightColor),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           child: Stack(
@@ -298,12 +303,12 @@ class _AnexoPageState extends State<AnexoPage> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: kPrimaryLightColor,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Text(
                           'Comprovante de Residência',
-                          style: TextStyle(color: Colors.white70),
+                          style: TextStyle(color: kPrimaryDarkColor),
                         )),
                   ),
                   Spacer(),
@@ -314,7 +319,7 @@ class _AnexoPageState extends State<AnexoPage> {
                         width: 42,
                         height: 42,
                         decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: kPrimaryLightColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: IconButton(
@@ -325,7 +330,7 @@ class _AnexoPageState extends State<AnexoPage> {
                               )),
                           icon: const Icon(
                             Icons.camera_alt,
-                            color: Colors.white70,
+                            color: kPrimaryDarkColor,
                           ),
                           // child: Text("Tire uma Foto"),
                         ),
@@ -335,7 +340,7 @@ class _AnexoPageState extends State<AnexoPage> {
                         width: 42,
                         height: 42,
                         decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: kPrimaryLightColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: IconButton(
@@ -343,7 +348,7 @@ class _AnexoPageState extends State<AnexoPage> {
 
                           icon: const Icon(
                             Icons.drive_file_move_rounded,
-                            color: Colors.white70,
+                            color: kPrimaryDarkColor,
                           ),
                           // child: Text("Anexar imagem"),
                         ),
@@ -363,7 +368,7 @@ class _AnexoPageState extends State<AnexoPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-                style: BorderStyle.solid, width: 1, color: Colors.black26),
+                style: BorderStyle.solid, width: 1, color: kPrimaryLightColor),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           child: Stack(
@@ -377,12 +382,12 @@ class _AnexoPageState extends State<AnexoPage> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: kPrimaryLightColor,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Text(
                           'Declaração Escolar',
-                          style: TextStyle(color: Colors.white70),
+                          style: TextStyle(color: kPrimaryDarkColor),
                         )),
                   ),
                   Spacer(),
@@ -393,7 +398,7 @@ class _AnexoPageState extends State<AnexoPage> {
                         width: 42,
                         height: 42,
                         decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: kPrimaryLightColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: IconButton(
@@ -404,7 +409,7 @@ class _AnexoPageState extends State<AnexoPage> {
                               )),
                           icon: const Icon(
                             Icons.camera_alt,
-                            color: Colors.white70,
+                            color: kPrimaryDarkColor,
                           ),
                           // child: Text("Tire uma Foto"),
                         ),
@@ -414,7 +419,7 @@ class _AnexoPageState extends State<AnexoPage> {
                         width: 42,
                         height: 42,
                         decoration: BoxDecoration(
-                          color: Colors.black87,
+                          color: kPrimaryLightColor,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: IconButton(
@@ -422,7 +427,7 @@ class _AnexoPageState extends State<AnexoPage> {
 
                           icon: const Icon(
                             Icons.drive_file_move_rounded,
-                            color: Colors.white70,
+                            color: kPrimaryDarkColor,
                           ),
                           // child: Text("Anexar imagem"),
                         ),
@@ -434,7 +439,7 @@ class _AnexoPageState extends State<AnexoPage> {
             ],
           ),
         ),
-        const SizedBox(height: 28),
+        const SizedBox(height: 20),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
+import 'package:carteira/design-system/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +27,7 @@ class CadastroPage extends StatelessWidget {
                   },
                   icon: const Icon(
                     Icons.close,
-                    color: Color(0xFF747474),
+                    color: kPrimaryColor,
                   ),
                 ),
               ),
@@ -37,6 +38,7 @@ class CadastroPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
+                    color: kPrimaryDarkColor,
                   ),
                 ),
               ),
