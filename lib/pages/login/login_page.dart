@@ -3,6 +3,8 @@ import 'package:carteira/design-system/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../design-system/buttons/custon_secondary_button.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -40,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: kPrimaryDarkColor),
+                    color: kPrimaryColor),
               ),
               const SizedBox(height: 20),
               const Center(
@@ -107,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               const SizedBox(height: 16),
-              CustomPrimaryButton(
+              CustomSecondaryButton(
                 onPressed: () {
                   // Navigator.of(context).pushNamed('/cadastro');
                   Get.toNamed('/cadastro');

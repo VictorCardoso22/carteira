@@ -1,8 +1,8 @@
 import 'package:carteira/design-system/components/constants.dart';
 import 'package:flutter/material.dart';
 
-class CustomPrimaryButton extends StatelessWidget {
-  const CustomPrimaryButton(
+class CustomSecondaryButton extends StatelessWidget {
+  CustomSecondaryButton(
       {key,
       required String titulo,
       required VoidCallback onPressed,
@@ -12,10 +12,10 @@ class CustomPrimaryButton extends StatelessWidget {
         _small = small,
         super(key: key);
 
-  final String _titulo;
-  final VoidCallback _onPressed;
+  String _titulo;
+  VoidCallback _onPressed;
 
-  final bool _small;
+  bool _small;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,13 @@ class CustomPrimaryButton extends StatelessWidget {
       child: Text(_titulo),
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: const BorderSide(color: kPrimaryColor, width: 2)),
         textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
         fixedSize: _small == false ? const Size(328, 53) : Size(153, 53),
-        primary: kPrimaryColor,
-        onPrimary: kPrimaryLightColor,
+        primary: kSupportLightColor,
+        onPrimary: kPrimaryColor,
       ),
     );
   }

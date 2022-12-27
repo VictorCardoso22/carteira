@@ -38,7 +38,7 @@ class CadastroPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: kPrimaryDarkColor,
+                    color: kPrimaryColor,
                   ),
                 ),
               ),

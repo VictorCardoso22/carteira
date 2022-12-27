@@ -57,7 +57,7 @@ class _DadosPageState extends State<DadosPage> {
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
-                                color: kPrimaryDarkColor,
+                                color: kPrimaryColor,
                               ),
                             ),
                           ),
