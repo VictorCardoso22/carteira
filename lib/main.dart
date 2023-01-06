@@ -1,9 +1,11 @@
 import 'package:carteira/design-system/components/constants.dart';
 import 'package:carteira/pages/login/login_page.dart';
+import 'package:carteira/pages/navegacao/navegacao.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'pages/cadastro/cadastro_page.dart';
 import 'pages/dados/dados_page.dart';
+import 'pages/navegacao/home/home_page.dart';
 import 'pages/splash/splash_page.dart';
 
 void main() {
@@ -21,6 +23,8 @@ class App extends StatelessWidget {
       routes: {
         '/splash': (_) => const SplashPage(),
         '/login': (_) => const LoginPage(),
+        '/navegacao': (_) => NavegacaoPage(),
+        '/home': (_) => HomePage(),
         '/cadastro': (_) => const CadastroPage(),
         '/dados': (_) => const DadosPage(),
       },

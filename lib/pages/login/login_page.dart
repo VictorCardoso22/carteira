@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 16),
               CustomPrimaryButton(
                 onPressed: () {
-                  print("teste essa desgraça");
+                  Get.toNamed('/navegacao');
                 },
                 titulo: 'Entrar',
               ),
