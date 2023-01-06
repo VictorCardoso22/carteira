@@ -20,11 +20,17 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                SizedBox(
-                  width: 80,
-                  child: Image.asset(
-                    'assets/logo.png',
-                  ),
+                Row(
+                  children: [
+                    const Expanded(
+                        child: Text('CARTEIRA DE TRANSPORTE ESTUDANTIL')),
+                    SizedBox(
+                      width: 80,
+                      child: Image.asset(
+                        'assets/logo.png',
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 20),
                 Row(
