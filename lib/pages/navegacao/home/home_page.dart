@@ -1,4 +1,6 @@
+import 'package:carteira/pages/carteira_pdf/carteira_pdf_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                   children: [
@@ -35,6 +37,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: 100,
@@ -98,12 +101,12 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: const [
                           Text('Matricula:'),
                           Text('xxxxxxxx'),
                         ],
@@ -111,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,19 +123,19 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: const [
                           Text('Turnos'),
                           Text('Vespertino'),
                           Text('Noturno'),
                         ],
                       ),
                     ),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: const [
                           Text('Validade:'),
                           Text('xx/xx/xxxx'),
                         ],
@@ -149,20 +152,23 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: const [
                           Text('Código validador'),
                           Text('xxxx'),
-                          Text('Endereço eletronico'),
+                          SizedBox(height: 8),
+                          Text('www.sitevalidador.com'),
                         ],
                       ),
                     ),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     Expanded(
-                      child: Container(
+                      child: SizedBox(
                         width: 60,
                         height: 60,
-                        color: Colors.amberAccent,
-                        child: Text('QRCode para o validador'),
+                        // color: Colors.amberAccent,
+                        child: Image.asset(
+                          'assets/qrcode.png',
+                        ),
                       ),
                     )
                   ],
@@ -172,7 +178,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         SizedBox(height: 30),
-        TextButton(onPressed: () {}, child: const Text('Download'))
+        TextButton(
+            onPressed: () {
+              Get.to(CarteiraPdfPage());
+            },
+            child: const Text('Download'))
       ],
     );
   }

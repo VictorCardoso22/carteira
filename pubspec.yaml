@@ -36,6 +36,8 @@ dependencies:
   camera_camera: ^2.0.2
   image_picker: ^0.7.4
   get:
+  pdf: ^3.8.4
+  printing: ^5.9.3
 
 dev_dependencies:
   flutter_test:
