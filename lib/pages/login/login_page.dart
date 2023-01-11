@@ -1,7 +1,11 @@
+import 'package:carteira/common_codes.dart';
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
 import 'package:carteira/design-system/components/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 
 import '../../design-system/buttons/custon_secondary_button.dart';
 
@@ -13,6 +17,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool? isLoading;
+  TextEditingController usernameController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+
+@override
+  void initState() {
+  initializeDefault();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,10 +59,11 @@ class _LoginPageState extends State<LoginPage> {
                     color: kPrimaryColor),
               ),
               const SizedBox(height: 20),
-              const Center(
+               Center(
                 child: SizedBox(
                   width: 328,
                   child: TextField(
+                    controller: usernameController ,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -59,10 +74,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              const Center(
+               Center(
                 child: SizedBox(
                   width: 328,
                   child: TextField(
+                    controller: passwordController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -75,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 16),
               CustomPrimaryButton(
                 onPressed: () {
-                  Get.toNamed('/navegacao');
+                  trySignin();
                 },
                 titulo: 'Entrar',
               ),
@@ -121,5 +137,42 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  trySignin() async {
+
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+          email: usernameController.text.trimRight(),
+          password: passwordController.text)
+          .then((value) {
+            Get.toNamed("/navegacao");
+       // setPreferencesCredentials(widget.usernameController.text.trimRight(), widget.passwordController.text);
+        getFirebaseData(); // TODO pegar informacoes do usuario
+      });
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      if (e.code == 'user-not-found') {
+        toastAviso("Usuário ou senha incorretos", Colors.red, context);
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        toastAviso("Usuário ou senha incorretos", Colors.red, context);
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
+  void getFirebaseData() {}
+
+  Future<void> initializeDefault() async {
+    FirebaseApp app = await Firebase.initializeApp(
+    );
+    print('Initialized default app $app');
   }
 }
