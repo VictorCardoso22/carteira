@@ -1,6 +1,7 @@
 import 'package:carteira/design-system/components/constants.dart';
 import 'package:carteira/pages/navegacao/home/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class NavegacaoPage extends StatefulWidget {
   NavegacaoPage({Key? key}) : super(key: key);
@@ -19,12 +20,11 @@ class _NavegacaoPageState extends State<NavegacaoPage> {
       'Index 1: Business',
       style: optionStyle,
     ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    Container()
+
   ];
   void _onItemTapped(int index) {
+    if(index == 2)  Get.offNamedUntil("/login", (route) => false);
     setState(() {
       _selectedIndex = index;
     });

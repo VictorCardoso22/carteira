@@ -1,11 +1,12 @@
 import 'package:carteira/common_codes.dart';
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
 import 'package:carteira/design-system/components/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:carteira/model/user.dart';
 
 import '../../design-system/buttons/custon_secondary_button.dart';
 
@@ -17,9 +18,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool? isLoading;
-  TextEditingController usernameController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  bool? isLoading = false;
+  TextEditingController usernameController = new TextEditingController(text:"fgualberto.santos@gmail.com");
+  TextEditingController passwordController = new TextEditingController(text:"pipoca123");
 
 @override
   void initState() {
@@ -78,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: SizedBox(
                   width: 328,
                   child: TextField(
+                    obscureText: true,
                     controller: passwordController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -89,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              CustomPrimaryButton(
+              isLoading! ? Center(child: CircularProgressIndicator()) : CustomPrimaryButton(
                 onPressed: () {
                   trySignin();
                 },
@@ -150,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
           email: usernameController.text.trimRight(),
           password: passwordController.text)
           .then((value) {
-            Get.toNamed("/navegacao");
+
        // setPreferencesCredentials(widget.usernameController.text.trimRight(), widget.passwordController.text);
         getFirebaseData(); // TODO pegar informacoes do usuario
       });
@@ -168,7 +170,22 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void getFirebaseData() {}
+  Future<void> getFirebaseData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+          if(documentSnapshot.exists){
+            print('Document data: ${documentSnapshot.data()}');
+            DataUser.dataUser = UserModel.fromJson(documentSnapshot.data());
+            Get.toNamed("/navegacao");
+            //User //documentSnapshot.data();
+          }
+    });
+  }
 
   Future<void> initializeDefault() async {
     FirebaseApp app = await Firebase.initializeApp(

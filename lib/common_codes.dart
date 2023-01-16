@@ -1,9 +1,14 @@
 
+import 'package:carteira/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 
 class GlobalTimeStamp {
   static DateTime now = DateTime.now();
+}
+
+class DataUser{
+  static UserModel? dataUser;
 }
 
 toastAviso(String aviso, Color color, BuildContext context) {

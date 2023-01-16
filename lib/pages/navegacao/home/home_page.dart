@@ -1,3 +1,4 @@
+import 'package:carteira/common_codes.dart';
 import 'package:carteira/pages/carteira_pdf/carteira_pdf_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Aluno:'),
-                        Text('Fulano da silva dos santos'),
+                        Text('${DataUser.dataUser!.nomeCompleto}'),
                       ],
                     ),
                   ],
@@ -97,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('CPF'),
-                          Text('xxx.xxx.xxx-xx'),
+                          Text('${DataUser.dataUser!.cpf}'),
                         ],
                       ),
                     ),
