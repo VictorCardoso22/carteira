@@ -4,13 +4,29 @@ import 'package:carteira/design-system/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class DadosPessoaisPage extends StatefulWidget {
-  const DadosPessoaisPage({Key? key}) : super(key: key);
+
+  TextEditingController textEditingControllerCpf = new TextEditingController();
+  TextEditingController textEditingControllerNomeCompleto = new TextEditingController();
+  TextEditingController textEditingControllerDataNascimento = new TextEditingController();
+  TextEditingController textEditingControllerRg = new TextEditingController();
+  TextEditingController textEditingControllerEmissor = new TextEditingController();
+  TextEditingController textEditingControllerCep = new TextEditingController();
+  TextEditingController textEditingControllerLogradouro = new TextEditingController();
+  TextEditingController textEditingControllerBairro = new TextEditingController();
+  TextEditingController textEditingControllerNumero = new TextEditingController();
+  TextEditingController textEditingControllerComplemento = new TextEditingController();
+  TextEditingController textEditingControllerEmail = new TextEditingController();
+  TextEditingController textEditingControllerSenha = new TextEditingController();
+
+  DadosPessoaisPage({Key? key}) : super(key: key);
 
   @override
   State<DadosPessoaisPage> createState() => _DadosPessoaisPageState();
 }
 
 class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Column(

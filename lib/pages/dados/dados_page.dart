@@ -16,6 +16,7 @@ class DadosPage extends StatefulWidget {
 class _DadosPageState extends State<DadosPage> {
   int _index = 0;
   bool isCompleted = false;
+  DadosPessoaisPage dadosPessoaisPage = DadosPessoaisPage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +116,7 @@ class _DadosPageState extends State<DadosPage> {
           ),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: DadosPessoaisPage(),
+            child: dadosPessoaisPage,
           ),
           isActive: _index >= 0,
           state: _index >= 0 ? StepState.complete : StepState.disabled,

@@ -5,6 +5,7 @@ import 'package:carteira/pages/navegacao/navegacao.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toast/toast.dart';
 import 'pages/cadastro/cadastro_page.dart';
 import 'pages/dados/dados_page.dart';
 import 'pages/navegacao/home/home_page.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const App());
 }
 
@@ -31,7 +33,7 @@ class App extends StatelessWidget {
         '/login': (_) => const LoginPage(),
         '/navegacao': (_) => NavegacaoPage(),
         '/home': (_) => HomePage(),
-        '/cadastro': (_) => const CadastroPage(),
+        '/cadastro': (_) => CadastroPage(),
         '/dados': (_) => const DadosPage(),
       },
       debugShowCheckedModeBanner: false,

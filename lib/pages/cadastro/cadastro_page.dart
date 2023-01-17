@@ -1,11 +1,15 @@
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
 import 'package:carteira/design-system/components/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CadastroPage extends StatelessWidget {
-  const CadastroPage({Key? key}) : super(key: key);
+import '../../common_codes.dart';
 
+class CadastroPage extends StatelessWidget {
+   CadastroPage({Key? key}) : super(key: key);
+
+  TextEditingController textEditingControllerCpf = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,10 +47,11 @@ class CadastroPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 64),
-              const Center(
+               Center(
                 child: SizedBox(
                   width: 328,
                   child: TextField(
+                    controller: textEditingControllerCpf,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -65,7 +70,8 @@ class CadastroPage extends StatelessWidget {
                     small: true,
                     onPressed: () {
                       // Navigator.of(context).pushNamed('/dados');
-                      Get.toNamed('/dados');
+                      verificaCadastro(context);
+
                     },
                     titulo: 'Avançar',
                   ),
@@ -76,5 +82,24 @@ class CadastroPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> verificaCadastro(BuildContext context) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore
+        .collection('users')
+        .where("cpf",isEqualTo: textEditingControllerCpf.text.trim())
+        .get().then((QuerySnapshot querySnapshot){
+        print('${textEditingControllerCpf.text }');
+        print('Document data: ${querySnapshot.docs}');
+            if(querySnapshot.size == 0){
+
+              Get.toNamed('/dados');
+
+            } else if(querySnapshot.size >= 0){
+              toastAviso("Esse cpf já está cadastrado", Colors.red, context );
+            }
+
+    });
   }
 }
