@@ -17,6 +17,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+
   runApp(const App());
 }
 

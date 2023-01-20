@@ -3,9 +3,13 @@
 import 'package:flutter/material.dart';
 
 class InstituicaoPage extends StatefulWidget {
-  const InstituicaoPage({Key? key}) : super(key: key);
+   InstituicaoPage({Key? key}) : super(key: key);
 
-  @override
+   TextEditingController textEditingControllerInstituicaoDeEnsino = new TextEditingController();
+   TextEditingController textEditingControllerMatricula = new TextEditingController();
+   TextEditingController textEditingControllerTurno = new TextEditingController();
+
+   @override
   State<InstituicaoPage> createState() => _InstituicaoPageState();
 }
 

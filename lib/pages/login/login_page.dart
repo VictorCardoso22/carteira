@@ -34,8 +34,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+
         child: Container(
-          height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 38),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(color: kPrimaryColor),
                 ),
               ),
-              Spacer(),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

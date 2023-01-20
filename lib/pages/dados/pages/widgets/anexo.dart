@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 class Anexo extends StatelessWidget {
   final File arquivo;
-  Anexo({Key? key, required this.arquivo}) : super(key: key);
+  Anexo({Key? key, required this.arquivo}) : super(key: key){
+    debugPrint("teste");
+  }
 
   @override
   Widget build(BuildContext context) {
