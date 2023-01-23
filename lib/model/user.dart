@@ -10,8 +10,11 @@
 /// rgAnexo : ""
 
 class UserModel {
+
+
   UserModel({
-      this.cpf, 
+      this.cpf,
+      this.curso,
       this.dataNascimento, 
       this.email, 
       this.endereco,
@@ -20,7 +23,13 @@ class UserModel {
       this.nomeCompleto, 
       this.numeroMatriculaFaculdade, 
       this.rg, 
-      this.rgAnexo,});
+      this.rgFrenteAnexo,
+      this.rgVersoAnexo,
+      this.declaracaoEscolarAnexo,
+      this.comprovanteResidenciaAnexo,
+      this.turno,
+      this.fotoAnexo
+  });
 
   UserModel.fromJson(dynamic json) {
     cpf = json['cpf'];
@@ -32,9 +41,16 @@ class UserModel {
     nomeCompleto = json['nomeCompleto'];
     numeroMatriculaFaculdade = json['numeroMatriculaFaculdade'];
     rg = json['rg'];
-    rgAnexo = json['rgAnexo'];
+    rgFrenteAnexo = json['rgFrenteAnexo'];
+    rgVersoAnexo = json['rgVersoAnexo'];
+    curso = json['curso'];
+    turno = json['turno'];
+    fotoAnexo = json['fotoAnexo'];
+    declaracaoEscolarAnexo = json['declaracaoEscolarAnexo'];
+    comprovanteResidenciaAnexo = json['comprovanteResidenciaAnexo'];
   }
   String? cpf;
+  String? curso;
   String? dataNascimento;
   String? email;
   String? endereco;
@@ -43,7 +59,13 @@ class UserModel {
   String? nomeCompleto;
   String? numeroMatriculaFaculdade;
   String? rg;
-  String? rgAnexo;
+  String? rgFrenteAnexo;
+  String? rgVersoAnexo;
+  String? fotoAnexo;
+  String? declaracaoEscolarAnexo;
+  String? comprovanteResidenciaAnexo;
+  List? turno;
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -56,7 +78,14 @@ class UserModel {
     map['nomeCompleto'] = nomeCompleto;
     map['numeroMatriculaFaculdade'] = numeroMatriculaFaculdade;
     map['rg'] = rg;
-    map['rgAnexo'] = rgAnexo;
+    map['rgFrenteAnexo'] = rgFrenteAnexo;
+    map['rgVersoAnexo'] = rgVersoAnexo;
+    map['curso'] = curso;
+    map['turno'] = turno;
+    map['fotoAnexo'] = fotoAnexo;
+    map['declaracaoEscolarAnexo'] = declaracaoEscolarAnexo ;
+    map['comprovanteResidenciaAnexo'] = comprovanteResidenciaAnexo ;
+
     return map;
   }
 

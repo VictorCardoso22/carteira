@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
 import 'package:carteira/design-system/components/constants.dart';
+import 'package:carteira/model/user.dart';
 import 'package:carteira/pages/dados/pages/anexo_page.dart';
 import 'package:carteira/pages/dados/pages/dados_pessoais_page.dart';
 import 'package:carteira/pages/dados/pages/instituicao_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +23,8 @@ class _DadosPageState extends State<DadosPage> {
   int _index = 0;
   bool isCompleted = false;
   DadosPessoaisPage dadosPessoaisPage = DadosPessoaisPage();
+  InstituicaoPage instituicaoPage = InstituicaoPage();
+  AnexoPage anexoPage = AnexoPage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,11 +83,15 @@ class _DadosPageState extends State<DadosPage> {
                           onStepContinue: () {
                             final isLastStep = _index == getSteps().length - 1;
                             if (isLastStep) {
+
+                            //  Map allData = Map();
+                              //map[""] = "";
+
                               setState(() => isCompleted = true);
-                              print('Completed $isLastStep');
+                              //print('Completed $isLastStep');
                             } else {
                               continued();
-                              print('continuando $isLastStep');
+                              //print('continuando $isLastStep');
                             }
                           },
                           onStepCancel: cancel,
@@ -128,7 +140,7 @@ class _DadosPageState extends State<DadosPage> {
           ),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: InstituicaoPage(),
+            child: instituicaoPage,
           ),
           isActive: _index >= 0,
           state: _index >= 1 ? StepState.complete : StepState.disabled,
@@ -140,12 +152,55 @@ class _DadosPageState extends State<DadosPage> {
           ),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: AnexoPage(),
+            child: anexoPage,
           ),
           isActive: _index >= 0,
           state: _index >= 2 ? StepState.complete : StepState.disabled,
         ),
       ];
+
+  addUserFirebase() async {
+
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    UserModel userModel = UserModel();
+    userModel.nome = dadosPessoaisPage.textEditingControllerNomeCompleto.text ;
+    userModel.nomeCompleto = dadosPessoaisPage.textEditingControllerNomeCompleto.text ;
+    userModel.cpf = dadosPessoaisPage.textEditingControllerCpf.text ;
+    userModel.rg = dadosPessoaisPage.textEditingControllerRg.text ;
+    userModel.rgFrenteAnexo = await addUserImages(file: anexoPage.arquivoRgFrente , nameFile: "rgFrente" ) ;
+    userModel.rgVersoAnexo = await addUserImages(file: anexoPage.arquivoRgVerso , nameFile: "rgVerso") ;
+    userModel.fotoAnexo = await addUserImages(file: anexoPage.arquivoFoto , nameFile: "fotoPerfil" ) ;
+    userModel.comprovanteResidenciaAnexo = await addUserImages(file: anexoPage.arquivoComprovanteResidencia , nameFile: "comprovanteResidencia" ) ;
+    userModel.declaracaoEscolarAnexo = await addUserImages(file: anexoPage.arquivoDeclaracaoEscolar , nameFile: "decalaracaoEscolar" ) ;
+    //  userModel.curso = instituicaoPage. ;
+    userModel.email = dadosPessoaisPage.textEditingControllerEmail.text ;
+    userModel.endereco = dadosPessoaisPage.textEditingControllerLogradouro.text ;
+    userModel.dataNascimento = dadosPessoaisPage.textEditingControllerDataNascimento.text ;
+    userModel.numeroMatriculaFaculdade = instituicaoPage.textEditingControllerMatricula.text ;
+
+    User? user = FirebaseAuth.instance.currentUser;
+    firestore.collection('users').doc(user!.uid).set(userModel.toJson()).then((value) {
+      setState(() {
+
+      });
+
+    }).catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future<String> addUserImages({File? file,nameFile}) async {
+
+    final _firebaseStorage = FirebaseStorage.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+      //Upload to Firebase
+      var snapshot = await _firebaseStorage.ref()
+          .child('${user!.uid}/$nameFile')
+          .putFile(file!);
+      var downloadUrl = await snapshot.ref.getDownloadURL();
+      setState(() {
+       // imageUrl = downloadUrl;
+      });
+      return downloadUrl;
+  }
 
   tapped(int step) {
     setState(() => _index = step);

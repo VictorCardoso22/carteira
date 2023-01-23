@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
         .get()
         .then((DocumentSnapshot documentSnapshot) {
           if(documentSnapshot.exists){
-            print('Document data: ${documentSnapshot.data()}');
+           // print('Document data: ${documentSnapshot.data()}');
             DataUser.dataUser = UserModel.fromJson(documentSnapshot.data());
             Get.toNamed("/navegacao");
             //User //documentSnapshot.data();

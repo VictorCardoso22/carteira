@@ -88,7 +88,7 @@ class CadastroPage extends StatelessWidget {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     await firestore
         .collection('users')
-        .where("cpf",isEqualTo: textEditingControllerCpf.text.trim())
+        .where("cpf", isEqualTo: textEditingControllerCpf.text.trim())
         .get().then((QuerySnapshot querySnapshot){
         print('${textEditingControllerCpf.text }');
         print('Document data: ${querySnapshot.docs}');
@@ -102,4 +102,6 @@ class CadastroPage extends StatelessWidget {
 
     });
   }
+
+
 }
