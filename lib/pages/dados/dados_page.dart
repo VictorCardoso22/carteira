@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:carteira/common_codes.dart';
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
 import 'package:carteira/design-system/components/constants.dart';
 import 'package:carteira/model/user.dart';
@@ -83,11 +84,11 @@ class _DadosPageState extends State<DadosPage> {
                           onStepContinue: () {
                             final isLastStep = _index == getSteps().length - 1;
                             if (isLastStep) {
-
+                              registerUserFirebase();
                             //  Map allData = Map();
                               //map[""] = "";
 
-                              setState(() => isCompleted = true);
+
                               //print('Completed $isLastStep');
                             } else {
                               continued();
@@ -159,7 +160,45 @@ class _DadosPageState extends State<DadosPage> {
         ),
       ];
 
-  addUserFirebase() async {
+  registerUserFirebase() async {
+    String email = dadosPessoaisPage.textEditingControllerEmail.text;
+    String password = dadosPessoaisPage.textEditingControllerSenha.text ;
+    debugPrint("$email aaaa");
+    debugPrint("$password bbb");
+    UserCredential userCredential;
+    // setState(() {
+    //   isLoading = true;
+    // });
+    try {
+      userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      debugPrint("teste");
+      addUserFirebase(userCredential.user!.uid);
+      setState(() => isCompleted = true);
+      debugPrint("teste");
+    } on FirebaseAuthException catch (e) {
+      debugPrint("teste");
+      if (e.code == 'weak-password') {
+        // setState(() {
+        //   isLoading = false;
+        // });
+        toastAviso("Senha fraca, favor colocar uma senha mais forte", Colors.red, context);
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        // setState(() {
+        //   isLoading = false;
+        // });
+        toastAviso("Já existe um cadastro com esse email", Colors.red, context);
+        print('The account already exists for that email.');
+      }
+      print('${e.code}');
+    } catch (e) {
+      print(e);
+    }
+
+
+  }
+
+  addUserFirebase(String uidUser) async {
 
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     UserModel userModel = UserModel();
@@ -172,14 +211,14 @@ class _DadosPageState extends State<DadosPage> {
     userModel.fotoAnexo = await addUserImages(file: anexoPage.arquivoFoto , nameFile: "fotoPerfil" ) ;
     userModel.comprovanteResidenciaAnexo = await addUserImages(file: anexoPage.arquivoComprovanteResidencia , nameFile: "comprovanteResidencia" ) ;
     userModel.declaracaoEscolarAnexo = await addUserImages(file: anexoPage.arquivoDeclaracaoEscolar , nameFile: "decalaracaoEscolar" ) ;
-    //  userModel.curso = instituicaoPage. ;
+    // //  userModel.curso = instituicaoPage. ;
     userModel.email = dadosPessoaisPage.textEditingControllerEmail.text ;
+
     userModel.endereco = dadosPessoaisPage.textEditingControllerLogradouro.text ;
     userModel.dataNascimento = dadosPessoaisPage.textEditingControllerDataNascimento.text ;
     userModel.numeroMatriculaFaculdade = instituicaoPage.textEditingControllerMatricula.text ;
 
-    User? user = FirebaseAuth.instance.currentUser;
-    firestore.collection('users').doc(user!.uid).set(userModel.toJson()).then((value) {
+    firestore.collection('users').doc(uidUser).set(userModel.toJson()).then((value) {
       setState(() {
 
       });

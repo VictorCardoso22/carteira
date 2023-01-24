@@ -34,6 +34,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextField(
+            controller: widget.textEditingControllerCpf,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -46,6 +47,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextField(
+            controller: widget.textEditingControllerNomeCompleto,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -58,6 +60,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextField(
+            controller: widget.textEditingControllerDataNascimento,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -74,6 +77,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               flex: 3,
               // width: 296,
               child: TextField(
+                controller: widget.textEditingControllerRg,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -86,6 +90,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
             Expanded(
               // width: 90,
               child: TextField(
+                controller: widget.textEditingControllerCpf,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -104,6 +109,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               flex: 4,
               // width: 282,
               child: TextField(
+                controller: widget.textEditingControllerCep,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -134,6 +140,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextField(
+            controller: widget.textEditingControllerLogradouro,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -150,6 +157,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               flex: 3,
               // width: 282,
               child: TextField(
+                controller: widget.textEditingControllerBairro,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -162,6 +170,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
             Expanded(
               // width: 38,
               child: TextField(
+                controller: widget.textEditingControllerNumero,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -188,6 +197,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextField(
+            controller: widget.textEditingControllerEmail,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -200,6 +210,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextField(
+            controller: widget.textEditingControllerSenha,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
