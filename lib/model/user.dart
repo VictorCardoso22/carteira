@@ -15,6 +15,7 @@ class UserModel {
   UserModel({
       this.cpf,
       this.curso,
+      this.instituicao,
       this.dataNascimento, 
       this.email, 
       this.endereco,
@@ -48,6 +49,7 @@ class UserModel {
     fotoAnexo = json['fotoAnexo'];
     declaracaoEscolarAnexo = json['declaracaoEscolarAnexo'];
     comprovanteResidenciaAnexo = json['comprovanteResidenciaAnexo'];
+    instituicao = json['instituicao'];
   }
   String? cpf;
   String? curso;
@@ -64,6 +66,7 @@ class UserModel {
   String? fotoAnexo;
   String? declaracaoEscolarAnexo;
   String? comprovanteResidenciaAnexo;
+  String? instituicao;
   List? turno;
 
 
@@ -85,6 +88,7 @@ class UserModel {
     map['fotoAnexo'] = fotoAnexo;
     map['declaracaoEscolarAnexo'] = declaracaoEscolarAnexo ;
     map['comprovanteResidenciaAnexo'] = comprovanteResidenciaAnexo ;
+    map['instituicao'] = instituicao;
 
     return map;
   }

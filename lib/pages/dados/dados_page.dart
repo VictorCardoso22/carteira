@@ -213,10 +213,13 @@ class _DadosPageState extends State<DadosPage> {
     userModel.declaracaoEscolarAnexo = await addUserImages(file: anexoPage.arquivoDeclaracaoEscolar , nameFile: "decalaracaoEscolar" ) ;
     // //  userModel.curso = instituicaoPage. ;
     userModel.email = dadosPessoaisPage.textEditingControllerEmail.text ;
-
+    userModel.curso = instituicaoPage.textEditingControllerCurso.text;
+    userModel.instituicao = instituicaoPage.textEditingControllerInstituicaoDeEnsino.text;
     userModel.endereco = dadosPessoaisPage.textEditingControllerLogradouro.text ;
     userModel.dataNascimento = dadosPessoaisPage.textEditingControllerDataNascimento.text ;
     userModel.numeroMatriculaFaculdade = instituicaoPage.textEditingControllerMatricula.text ;
+    userModel.instituicao =  instituicaoPage.textEditingControllerInstituicaoDeEnsino.text;
+
 
     firestore.collection('users').doc(uidUser).set(userModel.toJson()).then((value) {
       setState(() {

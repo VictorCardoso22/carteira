@@ -43,9 +43,7 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       width: 100,
                       height: 100,
-                      child: Image.asset(
-                        'assets/perfil.jpg',
-                      ),
+                      child: Image.network("${DataUser.dataUser!.fotoAnexo}"),
                     ),
                     SizedBox(width: 20),
                     Column(
@@ -80,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Curso:'),
+                          Text('Curso: ${DataUser.dataUser!.curso}'),
                           Text('xxxxxxxxxxxxxxxxx'),
                         ],
                       ),
@@ -107,9 +105,9 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text('Matricula:'),
-                          Text('xxxxxxxx'),
+                        children:  [
+                          Text('Matricula: ${DataUser.dataUser!.numeroMatriculaFaculdade}'),
+                      //    Text('xxxxxxxx'),
                         ],
                       ),
                     ),
