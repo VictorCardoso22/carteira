@@ -1,22 +1,30 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:carteira/design-system/components/constants.dart';
+import 'package:carteira/design-system/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class DadosPessoaisPage extends StatefulWidget {
-
   TextEditingController textEditingControllerCpf = new TextEditingController();
-  TextEditingController textEditingControllerNomeCompleto = new TextEditingController();
-  TextEditingController textEditingControllerDataNascimento = new TextEditingController();
+  TextEditingController textEditingControllerNomeCompleto =
+      new TextEditingController();
+  TextEditingController textEditingControllerDataNascimento =
+      new TextEditingController();
   TextEditingController textEditingControllerRg = new TextEditingController();
-  TextEditingController textEditingControllerEmissor = new TextEditingController();
+  TextEditingController textEditingControllerEmissor =
+      new TextEditingController();
   TextEditingController textEditingControllerCep = new TextEditingController();
-  TextEditingController textEditingControllerLogradouro = new TextEditingController();
-  TextEditingController textEditingControllerBairro = new TextEditingController();
-  TextEditingController textEditingControllerNumero = new TextEditingController();
-  TextEditingController textEditingControllerComplemento = new TextEditingController();
-  TextEditingController textEditingControllerEmail = new TextEditingController();
-  TextEditingController textEditingControllerSenha = new TextEditingController();
+  TextEditingController textEditingControllerLogradouro =
+      new TextEditingController();
+  TextEditingController textEditingControllerBairro =
+      new TextEditingController();
+  TextEditingController textEditingControllerNumero =
+      new TextEditingController();
+  TextEditingController textEditingControllerComplemento =
+      new TextEditingController();
+  TextEditingController textEditingControllerEmail =
+      new TextEditingController();
+  TextEditingController textEditingControllerSenha =
+      new TextEditingController();
 
   DadosPessoaisPage({Key? key}) : super(key: key);
 
@@ -25,8 +33,6 @@ class DadosPessoaisPage extends StatefulWidget {
 }
 
 class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Column(

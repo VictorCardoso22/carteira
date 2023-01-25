@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:camera_camera/camera_camera.dart';
-import 'package:carteira/design-system/components/constants.dart';
+import 'package:carteira/design-system/components/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,7 +10,7 @@ import 'widgets/anexo.dart';
 import 'widgets/preview_page.dart';
 
 class AnexoPage extends StatefulWidget {
-   AnexoPage({Key? key}) : super(key: key);
+  AnexoPage({Key? key}) : super(key: key);
   File? arquivoFoto;
   File? arquivoRgFrente;
   File? arquivoRgVerso;
@@ -21,9 +21,6 @@ class AnexoPage extends StatefulWidget {
 }
 
 class _AnexoPageState extends State<AnexoPage> {
-
-
-  
   final picker = ImagePicker();
 
   Future getFileFromGallery(File? arquivo) async {
@@ -33,29 +30,28 @@ class _AnexoPageState extends State<AnexoPage> {
     }
   }
 
-  showPreview(String arquivo,file) async {
+  showPreview(String arquivo, file) async {
     file = await Get.to(() => PreviewPage(file: file));
 
     if (file != null) {
       Get.back();
     }
     setState(() {
-      if(arquivo == "arquivoFoto"){
+      if (arquivo == "arquivoFoto") {
         widget.arquivoFoto = file;
       }
-      if(arquivo == "arquivoRgFrente"){
+      if (arquivo == "arquivoRgFrente") {
         widget.arquivoRgFrente = file;
       }
-      if(arquivo == "arquivoRgVerso"){
+      if (arquivo == "arquivoRgVerso") {
         widget.arquivoRgVerso = file;
       }
-      if(arquivo == "arquivoComprovanteResidencia"){
+      if (arquivo == "arquivoComprovanteResidencia") {
         widget.arquivoComprovanteResidencia = file;
       }
-      if(arquivo == "arquivoDeclaracaoEscolar"){
+      if (arquivo == "arquivoDeclaracaoEscolar") {
         widget.arquivoDeclaracaoEscolar = file;
       }
-
     });
   }
 
@@ -74,7 +70,8 @@ class _AnexoPageState extends State<AnexoPage> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           child: Stack(
             children: [
-              if (widget.arquivoFoto != null) Anexo(arquivo: widget.arquivoFoto!),
+              if (widget.arquivoFoto != null)
+                Anexo(arquivo: widget.arquivoFoto!),
               Column(
                 children: [
                   Align(
@@ -105,7 +102,8 @@ class _AnexoPageState extends State<AnexoPage> {
                         child: IconButton(
                           onPressed: (() => Get.to(
                                 () => CameraCamera(
-                                  onFile: (File file) => showPreview("arquivoFoto",file),
+                                  onFile: (File file) =>
+                                      showPreview("arquivoFoto", file),
                                 ),
                               )),
                           icon: const Icon(
@@ -124,7 +122,8 @@ class _AnexoPageState extends State<AnexoPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: IconButton(
-                          onPressed: (() => getFileFromGallery(widget.arquivoFoto)),
+                          onPressed: (() =>
+                              getFileFromGallery(widget.arquivoFoto)),
 
                           icon: const Icon(
                             Icons.drive_file_move_rounded,
@@ -161,7 +160,10 @@ class _AnexoPageState extends State<AnexoPage> {
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                 child: Stack(
                   children: [
-                    if (widget.arquivoRgFrente != null) SizedBox(width: 150, child: Anexo(arquivo: widget.arquivoRgFrente!)),
+                    if (widget.arquivoRgFrente != null)
+                      SizedBox(
+                          width: 150,
+                          child: Anexo(arquivo: widget.arquivoRgFrente!)),
                     Column(
                       children: [
                         Align(
@@ -180,10 +182,9 @@ class _AnexoPageState extends State<AnexoPage> {
                         ),
                         Spacer(),
                         SizedBox(
-                         // width: 300,
-                          height:40,
+                          // width: 300,
+                          height: 40,
                           child: Row(
-
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Container(
@@ -196,8 +197,8 @@ class _AnexoPageState extends State<AnexoPage> {
                                 child: IconButton(
                                   onPressed: (() => Get.to(
                                         () => CameraCamera(
-                                          onFile: (File file) =>
-                                              showPreview("arquivoRgFrente",file),
+                                          onFile: (File file) => showPreview(
+                                              "arquivoRgFrente", file),
                                         ),
                                       )),
                                   icon: const Icon(
@@ -216,7 +217,8 @@ class _AnexoPageState extends State<AnexoPage> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: IconButton(
-                                  onPressed: (() => getFileFromGallery(widget.arquivoRgFrente)),
+                                  onPressed: (() => getFileFromGallery(
+                                      widget.arquivoRgFrente)),
 
                                   icon: const Icon(
                                     Icons.drive_file_move_rounded,
@@ -248,7 +250,10 @@ class _AnexoPageState extends State<AnexoPage> {
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                 child: Stack(
                   children: [
-                    if (widget.arquivoRgVerso != null) SizedBox(width: 150, child: Anexo(arquivo: widget.arquivoRgVerso!)),
+                    if (widget.arquivoRgVerso != null)
+                      SizedBox(
+                          width: 150,
+                          child: Anexo(arquivo: widget.arquivoRgVerso!)),
                     Column(
                       children: [
                         Align(
@@ -280,7 +285,7 @@ class _AnexoPageState extends State<AnexoPage> {
                                 onPressed: (() => Get.to(
                                       () => CameraCamera(
                                         onFile: (File file) =>
-                                            showPreview("arquivoRgVerso",file),
+                                            showPreview("arquivoRgVerso", file),
                                       ),
                                     )),
                                 icon: const Icon(
@@ -299,7 +304,8 @@ class _AnexoPageState extends State<AnexoPage> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: IconButton(
-                                onPressed: (() => getFileFromGallery(widget.arquivoRgVerso)),
+                                onPressed: (() =>
+                                    getFileFromGallery(widget.arquivoRgVerso)),
 
                                 icon: const Icon(
                                   Icons.drive_file_move_rounded,
@@ -331,7 +337,8 @@ class _AnexoPageState extends State<AnexoPage> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           child: Stack(
             children: [
-              if (widget.arquivoComprovanteResidencia != null) Anexo(arquivo: widget.arquivoComprovanteResidencia!),
+              if (widget.arquivoComprovanteResidencia != null)
+                Anexo(arquivo: widget.arquivoComprovanteResidencia!),
               Column(
                 children: [
                   Align(
@@ -362,7 +369,8 @@ class _AnexoPageState extends State<AnexoPage> {
                         child: IconButton(
                           onPressed: (() => Get.to(
                                 () => CameraCamera(
-                                  onFile: (File file) => showPreview("arquivoComprovanteResidencia",file),
+                                  onFile: (File file) => showPreview(
+                                      "arquivoComprovanteResidencia", file),
                                 ),
                               )),
                           icon: const Icon(
@@ -381,7 +389,8 @@ class _AnexoPageState extends State<AnexoPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: IconButton(
-                          onPressed: (() => getFileFromGallery(widget.arquivoComprovanteResidencia)),
+                          onPressed: (() => getFileFromGallery(
+                              widget.arquivoComprovanteResidencia)),
 
                           icon: const Icon(
                             Icons.drive_file_move_rounded,
@@ -410,7 +419,8 @@ class _AnexoPageState extends State<AnexoPage> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           child: Stack(
             children: [
-              if (widget.arquivoDeclaracaoEscolar != null) Anexo(arquivo: widget.arquivoDeclaracaoEscolar!),
+              if (widget.arquivoDeclaracaoEscolar != null)
+                Anexo(arquivo: widget.arquivoDeclaracaoEscolar!),
               Column(
                 children: [
                   Align(
@@ -441,7 +451,8 @@ class _AnexoPageState extends State<AnexoPage> {
                         child: IconButton(
                           onPressed: (() => Get.to(
                                 () => CameraCamera(
-                                  onFile: (File file) => showPreview("arquivoDeclaracaoEscolar",file),
+                                  onFile: (File file) => showPreview(
+                                      "arquivoDeclaracaoEscolar", file),
                                 ),
                               )),
                           icon: const Icon(
@@ -460,7 +471,8 @@ class _AnexoPageState extends State<AnexoPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: IconButton(
-                          onPressed: (() => getFileFromGallery(widget.arquivoDeclaracaoEscolar)),
+                          onPressed: (() => getFileFromGallery(
+                              widget.arquivoDeclaracaoEscolar)),
 
                           icon: const Icon(
                             Icons.drive_file_move_rounded,

@@ -1,5 +1,5 @@
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
-import 'package:carteira/design-system/components/constants.dart';
+import 'package:carteira/design-system/components/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import '../../common_codes.dart';
 
 class CadastroPage extends StatelessWidget {
-   CadastroPage({Key? key}) : super(key: key);
+  CadastroPage({Key? key}) : super(key: key);
 
   TextEditingController textEditingControllerCpf = new TextEditingController();
   @override
@@ -47,7 +47,7 @@ class CadastroPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 64),
-               Center(
+              Center(
                 child: SizedBox(
                   width: 328,
                   child: TextField(
@@ -71,7 +71,6 @@ class CadastroPage extends StatelessWidget {
                     onPressed: () {
                       // Navigator.of(context).pushNamed('/dados');
                       verificaCadastro(context);
-
                     },
                     titulo: 'Avançar',
                   ),
@@ -89,19 +88,15 @@ class CadastroPage extends StatelessWidget {
     await firestore
         .collection('users')
         .where("cpf", isEqualTo: textEditingControllerCpf.text.trim())
-        .get().then((QuerySnapshot querySnapshot){
-        print('${textEditingControllerCpf.text }');
-        print('Document data: ${querySnapshot.docs}');
-            if(querySnapshot.size == 0){
-
-              Get.toNamed('/dados');
-
-            } else if(querySnapshot.size >= 0){
-              toastAviso("Esse cpf já está cadastrado", Colors.red, context );
-            }
-
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      print('${textEditingControllerCpf.text}');
+      print('Document data: ${querySnapshot.docs}');
+      if (querySnapshot.size == 0) {
+        Get.toNamed('/dados');
+      } else if (querySnapshot.size >= 0) {
+        toastAviso("Esse cpf já está cadastrado", Colors.red, context);
+      }
     });
   }
-
-
 }

@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:carteira/common_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,11 +16,18 @@ class CarteiraPdfPage extends StatelessWidget {
     final logoImage = pw.MemoryImage(
       (await rootBundle.load('assets/logo.png')).buffer.asUint8List(),
     );
-    final perfilImage = pw.MemoryImage(
-      (await rootBundle.load('assets/perfil.jpg')).buffer.asUint8List(),
-    );
+    // final perfilImage = pw.MemoryImage(
+    //   (await rootBundle.load('${DataUser.dataUser!.fotoAnexo}'))
+    //       .buffer
+    //       .asUint8List(),
+    // );
+
     final qrCode = pw.MemoryImage(
       (await rootBundle.load('assets/qrcode.png')).buffer.asUint8List(),
+    );
+
+    final netImage = await networkImage(
+      "${DataUser.dataUser!.fotoAnexo}",
     );
 
     pdf.addPage(
@@ -76,9 +84,9 @@ class CarteiraPdfPage extends StatelessWidget {
                                     children: [
                                       pw.Text(
                                         'CARTEIRA DE TRANSPORTE ESTUDANTIL',
-                                        style: const pw.TextStyle(
-                                          fontSize: 8,
-                                        ),
+                                        style: pw.TextStyle(
+                                            fontSize: 8,
+                                            fontWeight: pw.FontWeight.bold),
                                       ),
                                       // pw.Spacer(),
                                       pw.SizedBox(width: 20),
@@ -98,7 +106,7 @@ class CarteiraPdfPage extends StatelessWidget {
                                       pw.SizedBox(
                                         width: 60,
                                         height: 60,
-                                        child: pw.Image(perfilImage),
+                                        child: pw.Image(netImage),
                                       ),
                                       pw.SizedBox(width: 15),
                                       pw.Column(
@@ -108,31 +116,37 @@ class CarteiraPdfPage extends StatelessWidget {
                                               pw.CrossAxisAlignment.start,
                                           children: [
                                             pw.Text(
-                                              'Fulano da silva dos santos',
+                                              '${DataUser.dataUser!.nomeCompleto}',
                                               style: const pw.TextStyle(
                                                 fontSize: 8,
                                               ),
                                             ),
                                             pw.Text(
-                                              'CPF: xxx.xxx.xxx-xx',
+                                              'CPF: ${DataUser.dataUser!.cpf}',
                                               style: const pw.TextStyle(
                                                 fontSize: 8,
                                               ),
                                             ),
                                             pw.Text(
-                                              'Instituião: Ufal',
+                                              'Instituião: ${DataUser.dataUser!.instituicao}',
                                               style: const pw.TextStyle(
                                                 fontSize: 8,
                                               ),
                                             ),
                                             pw.Text(
-                                              'Curso: xxxxxxxxxxxxxxxxx',
+                                              'Curso: ${DataUser.dataUser!.curso}',
                                               style: const pw.TextStyle(
                                                 fontSize: 8,
                                               ),
                                             ),
                                             pw.Text(
-                                              'Turno: vespertino/noturno',
+                                              'Turno: ${DataUser.dataUser!.turno}',
+                                              style: const pw.TextStyle(
+                                                fontSize: 8,
+                                              ),
+                                            ),
+                                            pw.Text(
+                                              'Curso: ${DataUser.dataUser!.numeroMatriculaFaculdade}',
                                               style: const pw.TextStyle(
                                                 fontSize: 8,
                                               ),

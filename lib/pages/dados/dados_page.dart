@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:carteira/common_codes.dart';
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
-import 'package:carteira/design-system/components/constants.dart';
+import 'package:carteira/design-system/components/colors.dart';
 import 'package:carteira/model/user.dart';
 import 'package:carteira/pages/dados/pages/anexo_page.dart';
 import 'package:carteira/pages/dados/pages/dados_pessoais_page.dart';
@@ -85,9 +85,8 @@ class _DadosPageState extends State<DadosPage> {
                             final isLastStep = _index == getSteps().length - 1;
                             if (isLastStep) {
                               registerUserFirebase();
-                            //  Map allData = Map();
+                              //  Map allData = Map();
                               //map[""] = "";
-
 
                               //print('Completed $isLastStep');
                             } else {
@@ -162,7 +161,7 @@ class _DadosPageState extends State<DadosPage> {
 
   registerUserFirebase() async {
     String email = dadosPessoaisPage.textEditingControllerEmail.text;
-    String password = dadosPessoaisPage.textEditingControllerSenha.text ;
+    String password = dadosPessoaisPage.textEditingControllerSenha.text;
     debugPrint("$email aaaa");
     debugPrint("$password bbb");
     UserCredential userCredential;
@@ -170,7 +169,8 @@ class _DadosPageState extends State<DadosPage> {
     //   isLoading = true;
     // });
     try {
-      userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
       debugPrint("teste");
       addUserFirebase(userCredential.user!.uid);
       setState(() => isCompleted = true);
@@ -181,7 +181,8 @@ class _DadosPageState extends State<DadosPage> {
         // setState(() {
         //   isLoading = false;
         // });
-        toastAviso("Senha fraca, favor colocar uma senha mais forte", Colors.red, context);
+        toastAviso("Senha fraca, favor colocar uma senha mais forte",
+            Colors.red, context);
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         // setState(() {
@@ -194,54 +195,63 @@ class _DadosPageState extends State<DadosPage> {
     } catch (e) {
       print(e);
     }
-
-
   }
 
   addUserFirebase(String uidUser) async {
-
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     UserModel userModel = UserModel();
-    userModel.nome = dadosPessoaisPage.textEditingControllerNomeCompleto.text ;
-    userModel.nomeCompleto = dadosPessoaisPage.textEditingControllerNomeCompleto.text ;
-    userModel.cpf = dadosPessoaisPage.textEditingControllerCpf.text ;
-    userModel.rg = dadosPessoaisPage.textEditingControllerRg.text ;
-    userModel.rgFrenteAnexo = await addUserImages(file: anexoPage.arquivoRgFrente , nameFile: "rgFrente" ) ;
-    userModel.rgVersoAnexo = await addUserImages(file: anexoPage.arquivoRgVerso , nameFile: "rgVerso") ;
-    userModel.fotoAnexo = await addUserImages(file: anexoPage.arquivoFoto , nameFile: "fotoPerfil" ) ;
-    userModel.comprovanteResidenciaAnexo = await addUserImages(file: anexoPage.arquivoComprovanteResidencia , nameFile: "comprovanteResidencia" ) ;
-    userModel.declaracaoEscolarAnexo = await addUserImages(file: anexoPage.arquivoDeclaracaoEscolar , nameFile: "decalaracaoEscolar" ) ;
+    userModel.nome = dadosPessoaisPage.textEditingControllerNomeCompleto.text;
+    userModel.nomeCompleto =
+        dadosPessoaisPage.textEditingControllerNomeCompleto.text;
+    userModel.cpf = dadosPessoaisPage.textEditingControllerCpf.text;
+    userModel.rg = dadosPessoaisPage.textEditingControllerRg.text;
+    userModel.rgFrenteAnexo = await addUserImages(
+        file: anexoPage.arquivoRgFrente, nameFile: "rgFrente");
+    userModel.rgVersoAnexo = await addUserImages(
+        file: anexoPage.arquivoRgVerso, nameFile: "rgVerso");
+    userModel.fotoAnexo = await addUserImages(
+        file: anexoPage.arquivoFoto, nameFile: "fotoPerfil");
+    userModel.comprovanteResidenciaAnexo = await addUserImages(
+        file: anexoPage.arquivoComprovanteResidencia,
+        nameFile: "comprovanteResidencia");
+    userModel.declaracaoEscolarAnexo = await addUserImages(
+        file: anexoPage.arquivoDeclaracaoEscolar,
+        nameFile: "decalaracaoEscolar");
     // //  userModel.curso = instituicaoPage. ;
-    userModel.email = dadosPessoaisPage.textEditingControllerEmail.text ;
+    userModel.email = dadosPessoaisPage.textEditingControllerEmail.text;
     userModel.curso = instituicaoPage.textEditingControllerCurso.text;
-    userModel.instituicao = instituicaoPage.textEditingControllerInstituicaoDeEnsino.text;
-    userModel.endereco = dadosPessoaisPage.textEditingControllerLogradouro.text ;
-    userModel.dataNascimento = dadosPessoaisPage.textEditingControllerDataNascimento.text ;
-    userModel.numeroMatriculaFaculdade = instituicaoPage.textEditingControllerMatricula.text ;
-    userModel.instituicao =  instituicaoPage.textEditingControllerInstituicaoDeEnsino.text;
+    userModel.instituicao =
+        instituicaoPage.textEditingControllerInstituicaoDeEnsino.text;
+    userModel.endereco = dadosPessoaisPage.textEditingControllerLogradouro.text;
+    userModel.dataNascimento =
+        dadosPessoaisPage.textEditingControllerDataNascimento.text;
+    userModel.numeroMatriculaFaculdade =
+        instituicaoPage.textEditingControllerMatricula.text;
+    userModel.instituicao =
+        instituicaoPage.textEditingControllerInstituicaoDeEnsino.text;
 
-
-    firestore.collection('users').doc(uidUser).set(userModel.toJson()).then((value) {
-      setState(() {
-
-      });
-
+    firestore
+        .collection('users')
+        .doc(uidUser)
+        .set(userModel.toJson())
+        .then((value) {
+      setState(() {});
     }).catchError((error) => print("Failed to add user: $error"));
   }
 
-  Future<String> addUserImages({File? file,nameFile}) async {
-
+  Future<String> addUserImages({File? file, nameFile}) async {
     final _firebaseStorage = FirebaseStorage.instance;
     User? user = FirebaseAuth.instance.currentUser;
-      //Upload to Firebase
-      var snapshot = await _firebaseStorage.ref()
-          .child('${user!.uid}/$nameFile')
-          .putFile(file!);
-      var downloadUrl = await snapshot.ref.getDownloadURL();
-      setState(() {
-       // imageUrl = downloadUrl;
-      });
-      return downloadUrl;
+    //Upload to Firebase
+    var snapshot = await _firebaseStorage
+        .ref()
+        .child('${user!.uid}/$nameFile')
+        .putFile(file!);
+    var downloadUrl = await snapshot.ref.getDownloadURL();
+    setState(() {
+      // imageUrl = downloadUrl;
+    });
+    return downloadUrl;
   }
 
   tapped(int step) {

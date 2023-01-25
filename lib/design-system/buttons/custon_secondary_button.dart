@@ -1,4 +1,4 @@
-import 'package:carteira/design-system/components/constants.dart';
+import 'package:carteira/design-system/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomSecondaryButton extends StatelessWidget {

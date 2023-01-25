@@ -1,4 +1,4 @@
-import 'package:carteira/design-system/components/constants.dart';
+import 'package:carteira/design-system/components/colors.dart';
 import 'package:carteira/pages/navegacao/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,10 +21,9 @@ class _NavegacaoPageState extends State<NavegacaoPage> {
       style: optionStyle,
     ),
     Container()
-
   ];
   void _onItemTapped(int index) {
-    if(index == 2)  Get.offNamedUntil("/login", (route) => false);
+    if (index == 2) Get.offNamedUntil("/login", (route) => false);
     setState(() {
       _selectedIndex = index;
     });

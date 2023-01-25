@@ -1,4 +1,4 @@
-import 'package:carteira/design-system/components/constants.dart';
+import 'package:carteira/design-system/components/colors.dart';
 import 'package:carteira/firebase_options.dart';
 import 'package:carteira/pages/login/login_page.dart';
 import 'package:carteira/pages/navegacao/navegacao.dart';
@@ -16,7 +16,6 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
 
   runApp(const App());
 }
