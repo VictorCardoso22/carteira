@@ -127,7 +127,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
             Expanded(
               // width: 90,
               child: TextFormField(
-                controller: widget.textEditingControllerCpf,
+                controller: widget.textEditingControllerEmissor,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
