@@ -8,7 +8,7 @@ import '../../common_codes.dart';
 
 class CadastroPage extends StatelessWidget {
   CadastroPage({Key? key}) : super(key: key);
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController textEditingControllerCpf = new TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -50,13 +50,24 @@ class CadastroPage extends StatelessWidget {
               Center(
                 child: SizedBox(
                   width: 328,
-                  child: TextField(
-                    controller: textEditingControllerCpf,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                  child: Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      controller: textEditingControllerCpf,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        labelText: 'CPF*',
                       ),
-                      labelText: 'CPF',
+                      validator: (text) {
+                        if (text == null || text.isEmpty) {
+                          return 'O campo CPF não pode ser vazio!';
+                        }
+
+                        return null;
+                      },
                     ),
                   ),
                 ),
@@ -70,7 +81,9 @@ class CadastroPage extends StatelessWidget {
                     small: true,
                     onPressed: () {
                       // Navigator.of(context).pushNamed('/dados');
-                      verificaCadastro(context);
+                      if (_formKey.currentState!.validate()) {
+                        verificaCadastro(context);
+                      }
                     },
                     titulo: 'Avançar',
                   ),

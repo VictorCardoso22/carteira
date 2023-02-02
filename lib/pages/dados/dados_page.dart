@@ -22,6 +22,11 @@ class DadosPage extends StatefulWidget {
 
 class _DadosPageState extends State<DadosPage> {
   int _index = 0;
+  final List<GlobalKey<FormState>> _formKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+  ];
   bool isCompleted = false;
   DadosPessoaisPage dadosPessoaisPage = DadosPessoaisPage();
   InstituicaoPage instituicaoPage = InstituicaoPage();
@@ -89,10 +94,17 @@ class _DadosPageState extends State<DadosPage> {
                               //map[""] = "";
 
                               //print('Completed $isLastStep');
-                            } else {
-                              continued();
-                              //print('continuando $isLastStep');
                             }
+
+                            setState(() {
+                              if (_formKeys[_index].currentState?.validate() ??
+                                  false) {
+                                continued();
+                                //print('continuando $isLastStep');
+                              }
+                            });
+
+                            //  _formKeys[_index].currentState?.validate()
                           },
                           onStepCancel: cancel,
                           steps: getSteps(),
@@ -128,7 +140,7 @@ class _DadosPageState extends State<DadosPage> {
           ),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: dadosPessoaisPage,
+            child: Form(key: _formKeys[0], child: dadosPessoaisPage),
           ),
           isActive: _index >= 0,
           state: _index >= 0 ? StepState.complete : StepState.disabled,
@@ -140,7 +152,7 @@ class _DadosPageState extends State<DadosPage> {
           ),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: instituicaoPage,
+            child: Form(key: _formKeys[1], child: instituicaoPage),
           ),
           isActive: _index >= 0,
           state: _index >= 1 ? StepState.complete : StepState.disabled,
@@ -152,7 +164,7 @@ class _DadosPageState extends State<DadosPage> {
           ),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: anexoPage,
+            child: Form(key: _formKeys[2], child: anexoPage),
           ),
           isActive: _index >= 0,
           state: _index >= 2 ? StepState.complete : StepState.disabled,
