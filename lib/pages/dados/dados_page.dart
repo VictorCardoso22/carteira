@@ -7,6 +7,7 @@ import 'package:carteira/model/user.dart';
 import 'package:carteira/pages/dados/pages/anexo_page.dart';
 import 'package:carteira/pages/dados/pages/dados_pessoais_page.dart';
 import 'package:carteira/pages/dados/pages/instituicao_page.dart';
+import 'package:carteira/pages/login/login_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -35,9 +36,7 @@ class _DadosPageState extends State<DadosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: isCompleted
-          ? const Center(
-              child: Text('Completo'),
-            )
+          ? const LoginPage()
           : Theme(
               data: Theme.of(context).copyWith(
                   colorScheme: const ColorScheme.light(
@@ -186,6 +185,7 @@ class _DadosPageState extends State<DadosPage> {
       debugPrint("teste");
       addUserFirebase(userCredential.user!.uid);
       setState(() => isCompleted = true);
+      toastAviso("Cadastro criado com sucesso!", Colors.greenAccent, context);
       debugPrint("teste");
     } on FirebaseAuthException catch (e) {
       debugPrint("teste");
