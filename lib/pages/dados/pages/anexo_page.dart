@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:camera_camera/camera_camera.dart';
 import 'package:carteira/design-system/components/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,26 +13,79 @@ import 'widgets/preview_page.dart';
 
 class AnexoPage extends StatefulWidget {
   AnexoPage({Key? key}) : super(key: key);
-  File? arquivoFoto;
-  File? arquivoRgFrente;
-  File? arquivoRgVerso;
-  File? arquivoComprovanteResidencia;
-  File? arquivoDeclaracaoEscolar;
+  // Mobile
+  XFile? arquivoFoto;
+  XFile? arquivoRgFrente;
+  XFile? arquivoRgVerso;
+  XFile? arquivoComprovanteResidencia;
+  XFile? arquivoDeclaracaoEscolar;
+  // Web
+  Uint8List? arquivoFotoWeb = Uint8List(8);
+  Uint8List? arquivoRgFrenteWeb = Uint8List(8);
+  Uint8List? arquivoRgVersoWeb = Uint8List(8);
+  Uint8List? arquivoComprovanteResidenciaWeb = Uint8List(8);
+  Uint8List? arquivoDeclaracaoEscolarWeb = Uint8List(8);
   @override
   State<AnexoPage> createState() => _AnexoPageState();
 }
 
 class _AnexoPageState extends State<AnexoPage> {
-  final picker = ImagePicker();
+  XFile? _pickedImage;
+  Uint8List webImage = Uint8List(8);
 
-  Future getFileFromGallery(File? arquivo) async {
-    final file = await picker.getImage(source: ImageSource.gallery);
-    if (file != null) {
-      setState(() => arquivo = File(file.path));
+  Future getFileFromGallery(XFile? image, String nomeArquivo) async {
+    if (!kIsWeb) {
+      final ImagePicker picker = ImagePicker();
+      image = (await picker.pickImage(source: ImageSource.gallery));
+      if (image != null) {
+        var selected = XFile(image.path);
+        setState(() {
+          _pickedImage = selected;
+        });
+      } else {
+        print('no image has been picked');
+      }
+    } else if (kIsWeb) {
+      final ImagePicker picker = ImagePicker();
+      image = (await picker.pickImage(source: ImageSource.gallery));
+      if (image != null) {
+        var f = await image.readAsBytes();
+        setState(() {
+          webImage = f;
+          _pickedImage = XFile('a');
+        });
+      } else {
+        print('no image has been picked');
+      }
+    } else {
+      print('Sometihing wrong');
     }
+
+    setState(() {
+      if (nomeArquivo == "arquivoFoto") {
+        widget.arquivoFotoWeb = webImage;
+        widget.arquivoFoto = image;
+      }
+      if (nomeArquivo == "arquivoRgFrente") {
+        widget.arquivoRgFrenteWeb = webImage;
+        widget.arquivoRgFrente = image;
+      }
+      if (nomeArquivo == "arquivoRgVerso") {
+        widget.arquivoRgVersoWeb = webImage;
+        widget.arquivoRgVerso = image;
+      }
+      if (nomeArquivo == "arquivoComprovanteResidencia") {
+        widget.arquivoComprovanteResidenciaWeb = webImage;
+        widget.arquivoComprovanteResidencia = image;
+      }
+      if (nomeArquivo == "arquivoDeclaracaoEscolar") {
+        widget.arquivoDeclaracaoEscolarWeb = webImage;
+        widget.arquivoDeclaracaoEscolar = image;
+      }
+    });
   }
 
-  showPreview(String arquivo, file) async {
+  showPreview(String arquivo, File file) async {
     file = await Get.to(() => PreviewPage(file: file));
 
     if (file != null) {
@@ -38,19 +93,19 @@ class _AnexoPageState extends State<AnexoPage> {
     }
     setState(() {
       if (arquivo == "arquivoFoto") {
-        widget.arquivoFoto = file;
+        widget.arquivoFoto = XFile(file.path);
       }
       if (arquivo == "arquivoRgFrente") {
-        widget.arquivoRgFrente = file;
+        widget.arquivoRgFrente = XFile(file.path);
       }
       if (arquivo == "arquivoRgVerso") {
-        widget.arquivoRgVerso = file;
+        widget.arquivoRgVerso = XFile(file.path);
       }
       if (arquivo == "arquivoComprovanteResidencia") {
-        widget.arquivoComprovanteResidencia = file;
+        widget.arquivoComprovanteResidencia = XFile(file.path);
       }
       if (arquivo == "arquivoDeclaracaoEscolar") {
-        widget.arquivoDeclaracaoEscolar = file;
+        widget.arquivoDeclaracaoEscolar = XFile(file.path);
       }
     });
   }
@@ -71,7 +126,9 @@ class _AnexoPageState extends State<AnexoPage> {
           child: Stack(
             children: [
               if (widget.arquivoFoto != null)
-                Anexo(arquivo: widget.arquivoFoto!),
+                Anexo(
+                    arquivo: widget.arquivoFoto!,
+                    webImage: widget.arquivoFotoWeb!),
               Column(
                 children: [
                   Align(
@@ -122,8 +179,8 @@ class _AnexoPageState extends State<AnexoPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: IconButton(
-                          onPressed: (() =>
-                              getFileFromGallery(widget.arquivoFoto)),
+                          onPressed: (() => getFileFromGallery(
+                              widget.arquivoFoto, "arquivoFoto")),
 
                           icon: const Icon(
                             Icons.drive_file_move_rounded,
@@ -163,7 +220,9 @@ class _AnexoPageState extends State<AnexoPage> {
                     if (widget.arquivoRgFrente != null)
                       SizedBox(
                           width: 150,
-                          child: Anexo(arquivo: widget.arquivoRgFrente!)),
+                          child: Anexo(
+                              arquivo: widget.arquivoRgFrente!,
+                              webImage: widget.arquivoRgFrenteWeb!)),
                     Column(
                       children: [
                         Align(
@@ -218,7 +277,8 @@ class _AnexoPageState extends State<AnexoPage> {
                                 ),
                                 child: IconButton(
                                   onPressed: (() => getFileFromGallery(
-                                      widget.arquivoRgFrente)),
+                                      widget.arquivoRgFrente,
+                                      "arquivoRgFrente")),
 
                                   icon: const Icon(
                                     Icons.drive_file_move_rounded,
@@ -253,7 +313,9 @@ class _AnexoPageState extends State<AnexoPage> {
                     if (widget.arquivoRgVerso != null)
                       SizedBox(
                           width: 150,
-                          child: Anexo(arquivo: widget.arquivoRgVerso!)),
+                          child: Anexo(
+                              arquivo: widget.arquivoRgVerso!,
+                              webImage: widget.arquivoRgVersoWeb!)),
                     Column(
                       children: [
                         Align(
@@ -304,8 +366,8 @@ class _AnexoPageState extends State<AnexoPage> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: IconButton(
-                                onPressed: (() =>
-                                    getFileFromGallery(widget.arquivoRgVerso)),
+                                onPressed: (() => getFileFromGallery(
+                                    widget.arquivoRgVerso, "arquivoRgVerso")),
 
                                 icon: const Icon(
                                   Icons.drive_file_move_rounded,
@@ -338,7 +400,9 @@ class _AnexoPageState extends State<AnexoPage> {
           child: Stack(
             children: [
               if (widget.arquivoComprovanteResidencia != null)
-                Anexo(arquivo: widget.arquivoComprovanteResidencia!),
+                Anexo(
+                    arquivo: widget.arquivoComprovanteResidencia!,
+                    webImage: widget.arquivoComprovanteResidenciaWeb!),
               Column(
                 children: [
                   Align(
@@ -390,7 +454,8 @@ class _AnexoPageState extends State<AnexoPage> {
                         ),
                         child: IconButton(
                           onPressed: (() => getFileFromGallery(
-                              widget.arquivoComprovanteResidencia)),
+                              widget.arquivoComprovanteResidencia,
+                              "arquivoComprovanteResidencia")),
 
                           icon: const Icon(
                             Icons.drive_file_move_rounded,
@@ -420,7 +485,9 @@ class _AnexoPageState extends State<AnexoPage> {
           child: Stack(
             children: [
               if (widget.arquivoDeclaracaoEscolar != null)
-                Anexo(arquivo: widget.arquivoDeclaracaoEscolar!),
+                Anexo(
+                    arquivo: widget.arquivoDeclaracaoEscolar!,
+                    webImage: widget.arquivoDeclaracaoEscolarWeb!),
               Column(
                 children: [
                   Align(
@@ -472,7 +539,8 @@ class _AnexoPageState extends State<AnexoPage> {
                         ),
                         child: IconButton(
                           onPressed: (() => getFileFromGallery(
-                              widget.arquivoDeclaracaoEscolar)),
+                              widget.arquivoDeclaracaoEscolar,
+                              "arquivoDeclaracaoEscolar")),
 
                           icon: const Icon(
                             Icons.drive_file_move_rounded,

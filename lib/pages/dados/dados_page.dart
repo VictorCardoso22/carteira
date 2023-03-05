@@ -37,7 +37,7 @@ class _DadosPageState extends State<DadosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: isCompleted
-          ? HomePage()
+          ? const Center(child: CircularProgressIndicator())
           : Theme(
               data: Theme.of(context).copyWith(
                   colorScheme: const ColorScheme.light(
@@ -187,6 +187,7 @@ class _DadosPageState extends State<DadosPage> {
       addUserFirebase(userCredential.user!.uid);
       setState(() => isCompleted = true);
       toastAviso("Cadastro criado com sucesso!", Colors.greenAccent, context);
+      Get.toNamed('/login');
       debugPrint("teste");
     } on FirebaseAuthException catch (e) {
       debugPrint("teste");
@@ -203,6 +204,8 @@ class _DadosPageState extends State<DadosPage> {
         // });
         toastAviso("Já existe um cadastro com esse email", Colors.red, context);
         print('The account already exists for that email.');
+      } else if (e.code == "invalid-email") {
+        toastAviso("Email invalido", Colors.red, context);
       }
       print('${e.code}');
     } catch (e) {
@@ -219,16 +222,16 @@ class _DadosPageState extends State<DadosPage> {
     userModel.cpf = dadosPessoaisPage.textEditingControllerCpf.text;
     userModel.rg = dadosPessoaisPage.textEditingControllerRg.text;
     userModel.rgFrenteAnexo = await addUserImages(
-        file: anexoPage.arquivoRgFrente, nameFile: "rgFrente");
+        file: File(anexoPage.arquivoRgFrente!.path), nameFile: "rgFrente");
     userModel.rgVersoAnexo = await addUserImages(
-        file: anexoPage.arquivoRgVerso, nameFile: "rgVerso");
+        file: File(anexoPage.arquivoRgVerso!.path), nameFile: "rgVerso");
     userModel.fotoAnexo = await addUserImages(
-        file: anexoPage.arquivoFoto, nameFile: "fotoPerfil");
+        file: File(anexoPage.arquivoFoto!.path), nameFile: "fotoPerfil");
     userModel.comprovanteResidenciaAnexo = await addUserImages(
-        file: anexoPage.arquivoComprovanteResidencia,
+        file: File(anexoPage.arquivoComprovanteResidencia!.path),
         nameFile: "comprovanteResidencia");
     userModel.declaracaoEscolarAnexo = await addUserImages(
-        file: anexoPage.arquivoDeclaracaoEscolar,
+        file: File(anexoPage.arquivoDeclaracaoEscolar!.path),
         nameFile: "decalaracaoEscolar");
     // //  userModel.curso = instituicaoPage. ;
     userModel.email = dadosPessoaisPage.textEditingControllerEmail.text;
