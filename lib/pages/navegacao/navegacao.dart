@@ -1,4 +1,5 @@
 import 'package:carteira/design-system/components/colors.dart';
+import 'package:carteira/pages/dados/dados_page.dart';
 import 'package:carteira/pages/navegacao/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,10 +17,7 @@ class _NavegacaoPageState extends State<NavegacaoPage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    DadosPage(),
     Container()
   ];
   void _onItemTapped(int index) {
