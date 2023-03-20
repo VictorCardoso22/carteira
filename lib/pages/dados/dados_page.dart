@@ -16,7 +16,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DadosPage extends StatefulWidget {
-  const DadosPage({Key? key}) : super(key: key);
+  String? cpf;
+
+  DadosPessoaisPage? dadosPessoaisPage;
+  InstituicaoPage? instituicaoPage;
+  AnexoPage? anexoPage;
+  bool isCreating = false;
+
+   DadosPage({Key? key, this.cpf}) : super(key: key) {
+     dadosPessoaisPage = DadosPessoaisPage(cpf: cpf,);
+     instituicaoPage = InstituicaoPage();
+     anexoPage = AnexoPage();
+   }
 
   @override
   State<DadosPage> createState() => _DadosPageState();
@@ -29,16 +40,12 @@ class _DadosPageState extends State<DadosPage> {
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),
   ];
-  bool isCompleted = false;
-  DadosPessoaisPage dadosPessoaisPage = DadosPessoaisPage();
-  InstituicaoPage instituicaoPage = InstituicaoPage();
-  AnexoPage anexoPage = AnexoPage();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isCompleted
-          ? const Center(child: CircularProgressIndicator())
-          : Theme(
+      body:  Theme(
               data: Theme.of(context).copyWith(
                   colorScheme: const ColorScheme.light(
                 primary: kPrimaryColor,
@@ -90,19 +97,28 @@ class _DadosPageState extends State<DadosPage> {
                             final isLastStep = _index == getSteps().length - 1;
                             if (isLastStep) {
                               registerUserFirebase();
-                              //  Map allData = Map();
-                              //map[""] = "";
 
-                              //print('Completed $isLastStep');
+                            } else {
+                              setState(() {
+                                bool listTurnoBoolean = true;
+
+                                if (_index == 1) {
+                                  if (widget.instituicaoPage!.listTurno.isEmpty) {
+                                    listTurnoBoolean = false;
+                                    toastAviso(
+                                        "Defina o turno que estuda", Colors.red,
+                                        context);
+                                  }
+                                }
+
+                                if (((_formKeys[_index].currentState!
+                                    .validate()) && listTurnoBoolean) ??
+                                    false) {
+                                  continued();
+                                  //print('continuando $isLastStep');
+                                }
+                              });
                             }
-
-                            setState(() {
-                              if (_formKeys[_index].currentState?.validate() ??
-                                  false) {
-                                continued();
-                                //print('continuando $isLastStep');
-                              }
-                            });
 
                             //  _formKeys[_index].currentState?.validate()
                           },
@@ -110,14 +126,14 @@ class _DadosPageState extends State<DadosPage> {
                           steps: getSteps(),
                           controlsBuilder: (context, details) => Column(
                             children: [
-                              CustomPrimaryButton(
+                              widget.isCreating? Center(child: CircularProgressIndicator(),) : CustomPrimaryButton(
                                   titulo: _index == getSteps().length - 1
                                       ? 'Enviar'
                                       : 'Avançar',
                                   onPressed: details.onStepContinue!),
                               const SizedBox(height: 10),
                               if (_index != 0)
-                                TextButton(
+                                widget.isCreating? Text("Enviando...") : TextButton(
                                     onPressed: details.onStepCancel!,
                                     child: const Text('Voltar')),
                             ],
@@ -140,7 +156,7 @@ class _DadosPageState extends State<DadosPage> {
           ),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: Form(key: _formKeys[0], child: dadosPessoaisPage),
+            child: Form(key: _formKeys[0], child: widget.dadosPessoaisPage!),
           ),
           isActive: _index >= 0,
           state: _index >= 0 ? StepState.complete : StepState.disabled,
@@ -152,7 +168,7 @@ class _DadosPageState extends State<DadosPage> {
           ),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: Form(key: _formKeys[1], child: instituicaoPage),
+            child: Form(key: _formKeys[1], child: widget.instituicaoPage!),
           ),
           isActive: _index >= 0,
           state: _index >= 1 ? StepState.complete : StepState.disabled,
@@ -164,7 +180,7 @@ class _DadosPageState extends State<DadosPage> {
           ),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: Form(key: _formKeys[2], child: anexoPage),
+            child: Form(key: _formKeys[2], child: widget.anexoPage!),
           ),
           isActive: _index >= 0,
           state: _index >= 2 ? StepState.complete : StepState.disabled,
@@ -172,8 +188,8 @@ class _DadosPageState extends State<DadosPage> {
       ];
 
   registerUserFirebase() async {
-    String email = dadosPessoaisPage.textEditingControllerEmail.text;
-    String password = dadosPessoaisPage.textEditingControllerSenha.text;
+    String email = widget.dadosPessoaisPage!.textEditingControllerEmail.text;
+    String password = widget.dadosPessoaisPage!.textEditingControllerSenha.text;
     debugPrint("$email aaaa");
     debugPrint("$password bbb");
     UserCredential userCredential;
@@ -183,9 +199,14 @@ class _DadosPageState extends State<DadosPage> {
     try {
       userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      debugPrint("teste");
-      addUserFirebase(userCredential.user!.uid);
-      setState(() => isCompleted = true);
+      //debugPrint("teste");
+      setState(() {
+        widget.isCreating = true;
+      });
+      await addUserFirebase(userCredential.user!.uid);
+      setState(() {
+        widget.isCreating = false;
+      });
       toastAviso("Cadastro criado com sucesso!", Colors.greenAccent, context);
       Get.toNamed('/login');
       debugPrint("teste");
@@ -216,35 +237,38 @@ class _DadosPageState extends State<DadosPage> {
   addUserFirebase(String uidUser) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     UserModel userModel = UserModel();
-    userModel.nome = dadosPessoaisPage.textEditingControllerNomeCompleto.text;
+    String cpfText = widget.dadosPessoaisPage!.textEditingControllerCpf.text;
+    userModel.nome = widget.dadosPessoaisPage!.textEditingControllerNomeCompleto.text;
     userModel.nomeCompleto =
-        dadosPessoaisPage.textEditingControllerNomeCompleto.text;
-    userModel.cpf = dadosPessoaisPage.textEditingControllerCpf.text;
-    userModel.rg = dadosPessoaisPage.textEditingControllerRg.text;
+        widget.dadosPessoaisPage!.textEditingControllerNomeCompleto.text;
+    userModel.cpf = widget.dadosPessoaisPage!.maskFormatterCPF.unmaskText(cpfText); // Mandar cpf sem a mascara.
+    userModel.rg = widget.dadosPessoaisPage!.textEditingControllerRg.text;
     userModel.rgFrenteAnexo = await addUserImages(
-        file: File(anexoPage.arquivoRgFrente!.path), nameFile: "rgFrente");
+        file: File(widget.anexoPage!.arquivoRgFrente!.path), nameFile: "rgFrente");
     userModel.rgVersoAnexo = await addUserImages(
-        file: File(anexoPage.arquivoRgVerso!.path), nameFile: "rgVerso");
+        file: File(widget.anexoPage!.arquivoRgVerso!.path), nameFile: "rgVerso");
     userModel.fotoAnexo = await addUserImages(
-        file: File(anexoPage.arquivoFoto!.path), nameFile: "fotoPerfil");
+        file: File(widget.anexoPage!.arquivoFoto!.path), nameFile: "fotoPerfil");
     userModel.comprovanteResidenciaAnexo = await addUserImages(
-        file: File(anexoPage.arquivoComprovanteResidencia!.path),
+        file: File(widget.anexoPage!.arquivoComprovanteResidencia!.path),
         nameFile: "comprovanteResidencia");
     userModel.declaracaoEscolarAnexo = await addUserImages(
-        file: File(anexoPage.arquivoDeclaracaoEscolar!.path),
+        file: File(widget.anexoPage!.arquivoDeclaracaoEscolar!.path),
         nameFile: "decalaracaoEscolar");
+
     // //  userModel.curso = instituicaoPage. ;
-    userModel.email = dadosPessoaisPage.textEditingControllerEmail.text;
-    userModel.curso = instituicaoPage.textEditingControllerCurso.text;
+    userModel.email = widget.dadosPessoaisPage!.textEditingControllerEmail.text;
+    userModel.turno = widget.instituicaoPage!.listTurno;
+    userModel.curso = widget.instituicaoPage!.textEditingControllerCurso.text;
     userModel.instituicao =
-        instituicaoPage.textEditingControllerInstituicaoDeEnsino.text;
-    userModel.endereco = dadosPessoaisPage.textEditingControllerLogradouro.text;
+        widget.instituicaoPage!.textEditingControllerInstituicaoDeEnsino.text;
+    userModel.endereco = widget.dadosPessoaisPage!.textEditingControllerLogradouro.text;
     userModel.dataNascimento =
-        dadosPessoaisPage.textEditingControllerDataNascimento.text;
+        widget.dadosPessoaisPage!.textEditingControllerDataNascimento.text;
     userModel.numeroMatriculaFaculdade =
-        instituicaoPage.textEditingControllerMatricula.text;
+        widget.instituicaoPage!.textEditingControllerMatricula.text;
     userModel.instituicao =
-        instituicaoPage.textEditingControllerInstituicaoDeEnsino.text;
+        widget.instituicaoPage!.textEditingControllerInstituicaoDeEnsino.text;
 
     firestore
         .collection('users')

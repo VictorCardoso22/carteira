@@ -34,7 +34,7 @@ class App extends StatelessWidget {
         '/navegacao': (_) => NavegacaoPage(),
         '/home': (_) => HomePage(),
         '/cadastro': (_) => CadastroPage(),
-        '/dados': (_) => const DadosPage(),
+        '/dados': (_) =>  DadosPage(),
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

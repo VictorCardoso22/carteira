@@ -1,12 +1,16 @@
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
 import 'package:carteira/design-system/components/colors.dart';
+import 'package:carteira/pages/dados/dados_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:cpf_cnpj_validator/cpf_validator.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../common_codes.dart';
 
 class CadastroPage extends StatelessWidget {
+
+  var maskFormatterCPF = new MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
   CadastroPage({Key? key}) : super(key: key);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController textEditingControllerCpf = new TextEditingController();
@@ -55,6 +59,7 @@ class CadastroPage extends StatelessWidget {
                     child: TextFormField(
                       controller: textEditingControllerCpf,
                       keyboardType: TextInputType.number,
+                      inputFormatters: [maskFormatterCPF],
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -62,8 +67,9 @@ class CadastroPage extends StatelessWidget {
                         labelText: 'CPF*',
                       ),
                       validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'O campo CPF não pode ser vazio!';
+
+                        if (!CPFValidator.isValid(maskFormatterCPF.unmaskText(text!))) {
+                          return 'Cpf inválido';
                         }
 
                         return null;
@@ -97,16 +103,17 @@ class CadastroPage extends StatelessWidget {
   }
 
   Future<void> verificaCadastro(BuildContext context) async {
+    String cpfUnmask  = maskFormatterCPF.unmaskText(textEditingControllerCpf.text).trim();
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     await firestore
         .collection('users')
-        .where("cpf", isEqualTo: textEditingControllerCpf.text.trim())
+        .where("cpf", isEqualTo: cpfUnmask)
         .get()
         .then((QuerySnapshot querySnapshot) {
-      print('${textEditingControllerCpf.text}');
-      print('Document data: ${querySnapshot.docs}');
+      debugPrint('$cpfUnmask');
+      debugPrint('Document data: ${querySnapshot.docs}');
       if (querySnapshot.size == 0) {
-        Get.toNamed('/dados');
+        Get.to(DadosPage(cpf: cpfUnmask,));
       } else if (querySnapshot.size >= 0) {
         toastAviso("Esse cpf já está cadastrado", Colors.red, context);
       }
