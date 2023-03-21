@@ -17,8 +17,8 @@ class _NavegacaoPageState extends State<NavegacaoPage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    //DadosPage(),
-   // Container()
+    DadosPage(),
+    Container()
   ];
   void _onItemTapped(int index) {
     if (index == 2) Get.offNamedUntil("/login", (route) => false);

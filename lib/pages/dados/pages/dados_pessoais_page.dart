@@ -1,13 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:carteira/common_codes.dart';
 import 'package:carteira/design-system/components/colors.dart';
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class DadosPessoaisPage extends StatefulWidget {
   String? cpf;
-
+  bool isEnabled = true;
   TextEditingController textEditingControllerCpf = TextEditingController();
   TextEditingController textEditingControllerNomeCompleto = TextEditingController();
   TextEditingController textEditingControllerDataNascimento = TextEditingController();
@@ -16,7 +18,7 @@ class DadosPessoaisPage extends StatefulWidget {
   TextEditingController textEditingControllerCep = TextEditingController();
   TextEditingController textEditingControllerLogradouro = TextEditingController();
   TextEditingController textEditingControllerBairro = TextEditingController();
-  TextEditingController textEditingControllerNumero =  TextEditingController();
+  TextEditingController textEditingControllerNumeroEndereco =  TextEditingController();
   TextEditingController textEditingControllerComplemento = TextEditingController();
   TextEditingController textEditingControllerEmail =  TextEditingController();
   TextEditingController textEditingControllerSenha =  TextEditingController();
@@ -28,7 +30,25 @@ class DadosPessoaisPage extends StatefulWidget {
 
 
   DadosPessoaisPage({Key? key, this.cpf}) : super(key: key) {
-    textEditingControllerCpf.text = maskFormatterCPF.maskText(cpf!) ;
+    if(DataUser.dataUser == null){
+      textEditingControllerCpf.text = maskFormatterCPF.maskText(cpf!);
+    } else{
+      isEnabled = false;
+       textEditingControllerCpf.text = "${DataUser.dataUser!.cpf}";
+       textEditingControllerNomeCompleto.text = "${DataUser.dataUser!.nomeCompleto}";
+       textEditingControllerDataNascimento.text = "${DataUser.dataUser!.dataNascimento}";
+       textEditingControllerRg.text ="${DataUser.dataUser!.rg}";
+      // textEditingControllerEmissor.text = DataUser.dataUser!.e!; TODO falta adicionar emissor rg
+      // textEditingControllerCep.text = DataUser.dataUser!.!; TODO falta adicionar cep no banco
+       textEditingControllerLogradouro.text = "${DataUser.dataUser!.endereco}";
+      // textEditingControllerBairro.text = DataUser.dataUser!.!;
+     //  textEditingControllerNumeroEndereco.text =  DataUser.dataUser!.cpf!;
+     //  textEditingControllerComplemento.text = DataUser.dataUser!.cc!;
+       textEditingControllerEmail.text = "${DataUser.dataUser!.email}";
+      // textEditingControllerSenha.text =  DataUser.dataUser!.cpf!;
+    }
+
+
   }
 
   @override
@@ -49,6 +69,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
+            enabled: widget.isEnabled,
             controller: widget.textEditingControllerCpf,
             keyboardType: TextInputType.number,
             inputFormatters: [widget.maskFormatterCPF],
@@ -71,6 +92,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
+            enabled: widget.isEnabled,
             controller: widget.textEditingControllerNomeCompleto,
             decoration: InputDecoration(
               border: OutlineInputBorder(
@@ -92,6 +114,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
+            enabled: widget.isEnabled,
             controller: widget.textEditingControllerDataNascimento,
             inputFormatters: [widget.maskFormatterDataNascimento],
             decoration: InputDecoration(
@@ -117,6 +140,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               flex: 3,
               // width: 296,
               child: TextFormField(
+                enabled: widget.isEnabled,
                 controller: widget.textEditingControllerRg,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -138,6 +162,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
             Expanded(
               // width: 90,
               child: TextFormField(
+                enabled: widget.isEnabled,
                 controller: widget.textEditingControllerEmissor,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -163,6 +188,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               flex: 4,
               // width: 282,
               child: TextFormField(
+                enabled: widget.isEnabled,
                 controller: widget.textEditingControllerCep,
                 keyboardType: TextInputType.number,
                 inputFormatters: [widget.maskFormatterCEP],
@@ -203,6 +229,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
+            enabled: widget.isEnabled,
             controller: widget.textEditingControllerLogradouro,
             decoration: InputDecoration(
               border: OutlineInputBorder(
@@ -227,6 +254,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               flex: 3,
               // width: 282,
               child: TextFormField(
+                enabled: widget.isEnabled,
                 controller: widget.textEditingControllerBairro,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -247,7 +275,8 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
             Expanded(
               // width: 38,
               child: TextFormField(
-                controller: widget.textEditingControllerNumero,
+                enabled: widget.isEnabled,
+                controller: widget.textEditingControllerNumeroEndereco,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -270,6 +299,8 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
+            enabled: widget.isEnabled,
+            controller: widget.textEditingControllerComplemento,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -282,6 +313,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
+            enabled: widget.isEnabled,
             controller: widget.textEditingControllerEmail,
             decoration: InputDecoration(
               border: OutlineInputBorder(
@@ -306,6 +338,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
+            enabled: widget.isEnabled,
             controller: widget.textEditingControllerSenha,
             obscureText: true,
             decoration: InputDecoration(

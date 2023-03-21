@@ -237,39 +237,41 @@ class _DadosPageState extends State<DadosPage> {
   addUserFirebase(String uidUser) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     UserModel userModel = UserModel();
+    ///Step 1
     String cpfText = widget.dadosPessoaisPage!.textEditingControllerCpf.text;
     userModel.nome = widget.dadosPessoaisPage!.textEditingControllerNomeCompleto.text;
-    userModel.nomeCompleto =
-        widget.dadosPessoaisPage!.textEditingControllerNomeCompleto.text;
+    userModel.nomeCompleto = widget.dadosPessoaisPage!.textEditingControllerNomeCompleto.text;
     userModel.cpf = widget.dadosPessoaisPage!.maskFormatterCPF.unmaskText(cpfText); // Mandar cpf sem a mascara.
     userModel.rg = widget.dadosPessoaisPage!.textEditingControllerRg.text;
-    userModel.rgFrenteAnexo = await addUserImages(
-        file: File(widget.anexoPage!.arquivoRgFrente!.path), nameFile: "rgFrente");
-    userModel.rgVersoAnexo = await addUserImages(
-        file: File(widget.anexoPage!.arquivoRgVerso!.path), nameFile: "rgVerso");
-    userModel.fotoAnexo = await addUserImages(
-        file: File(widget.anexoPage!.arquivoFoto!.path), nameFile: "fotoPerfil");
-    userModel.comprovanteResidenciaAnexo = await addUserImages(
-        file: File(widget.anexoPage!.arquivoComprovanteResidencia!.path),
-        nameFile: "comprovanteResidencia");
-    userModel.declaracaoEscolarAnexo = await addUserImages(
-        file: File(widget.anexoPage!.arquivoDeclaracaoEscolar!.path),
-        nameFile: "decalaracaoEscolar");
-
-    // //  userModel.curso = instituicaoPage. ;
-    userModel.email = widget.dadosPessoaisPage!.textEditingControllerEmail.text;
+    userModel.dataNascimento = widget.dadosPessoaisPage!.textEditingControllerDataNascimento.text;
+    userModel.endereco =
+    """ 
+    Logradouro: ${widget.dadosPessoaisPage!.textEditingControllerLogradouro.text} 
+    Bairro: ${widget.dadosPessoaisPage!.textEditingControllerBairro.text}
+    Número: ${widget.dadosPessoaisPage!.textEditingControllerNumeroEndereco.text}
+    Complemento: ${widget.dadosPessoaisPage!.textEditingControllerComplemento.text}
+    """;
+    ///--------------------------------------------------------------------------------------------------///
+    
+    ///Step 2
+    userModel.email = widget.dadosPessoaisPage!.textEditingControllerEmail.text.trim();
     userModel.turno = widget.instituicaoPage!.listTurno;
     userModel.curso = widget.instituicaoPage!.textEditingControllerCurso.text;
-    userModel.instituicao =
-        widget.instituicaoPage!.textEditingControllerInstituicaoDeEnsino.text;
-    userModel.endereco = widget.dadosPessoaisPage!.textEditingControllerLogradouro.text;
-    userModel.dataNascimento =
-        widget.dadosPessoaisPage!.textEditingControllerDataNascimento.text;
-    userModel.numeroMatriculaFaculdade =
-        widget.instituicaoPage!.textEditingControllerMatricula.text;
-    userModel.instituicao =
-        widget.instituicaoPage!.textEditingControllerInstituicaoDeEnsino.text;
+    userModel.instituicao = widget.instituicaoPage!.textEditingControllerInstituicaoDeEnsino.text;
+    userModel.numeroMatriculaFaculdade = widget.instituicaoPage!.textEditingControllerMatricula.text;
+    userModel.instituicao = widget.instituicaoPage!.textEditingControllerInstituicaoDeEnsino.text;
+    ///---------------------------------------------------------------------------------------------------///
+    
+    ///Step 3
+    userModel.rgFrenteAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoRgFrente!.path), nameFile: "rgFrente");
+    userModel.rgVersoAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoRgVerso!.path), nameFile: "rgVerso");
+    userModel.fotoAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoFoto!.path), nameFile: "fotoPerfil");
+    userModel.comprovanteResidenciaAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoComprovanteResidencia!.path), nameFile: "comprovanteResidencia");
+    userModel.declaracaoEscolarAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoDeclaracaoEscolar!.path), nameFile: "decalaracaoEscolar");
+    ///--------------------------------------------------------------------------------------------------///
 
+    userModel.ativo = false; // O usuario tem que ser aprovado para ficar ativo
+    userModel.timeStampCriacao = DateTime.now().toIso8601String();
     firestore
         .collection('users')
         .doc(uidUser)

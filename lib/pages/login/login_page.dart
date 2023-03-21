@@ -21,9 +21,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool? isLoading = false;
   TextEditingController usernameController =
-      new TextEditingController(text: "fgualberto.santos@gmail.com");
+      new TextEditingController(text: "");
   TextEditingController passwordController =
-      new TextEditingController(text: "pipoca123");
+      new TextEditingController(text: "");
 
   @override
   void initState() {
@@ -182,9 +182,9 @@ class _LoginPageState extends State<LoginPage> {
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        // print('Document data: ${documentSnapshot.data()}');
+         print('Document data: ${documentSnapshot.data()}');
         DataUser.dataUser = UserModel.fromJson(documentSnapshot.data());
-        Get.toNamed("/navegacao");
+        Get.offAndToNamed("/navegacao");
         //User //documentSnapshot.data();
       }
     });

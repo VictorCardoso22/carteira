@@ -17,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3))
-        .then((_) => Get.toNamed('/login'));
+        .then((_) => Get.offAndToNamed('/login'));
   }
 
   @override

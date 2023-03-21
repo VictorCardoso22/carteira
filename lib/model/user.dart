@@ -11,7 +11,6 @@
 
 class UserModel {
 
-
   UserModel({
       this.cpf,
       this.curso,
@@ -19,7 +18,6 @@ class UserModel {
       this.dataNascimento, 
       this.email, 
       this.endereco,
-      this.faculdadeAnexo, 
       this.nome, 
       this.nomeCompleto, 
       this.numeroMatriculaFaculdade, 
@@ -29,7 +27,11 @@ class UserModel {
       this.declaracaoEscolarAnexo,
       this.comprovanteResidenciaAnexo,
       this.turno,
-      this.fotoAnexo
+      this.fotoAnexo,
+      this.ativo,
+      this.timeStampCriacao,
+      this.validade,
+
   });
 
   UserModel.fromJson(dynamic json) {
@@ -37,7 +39,7 @@ class UserModel {
     dataNascimento = json['dataNascimento'];
     email = json['email'];
     endereco = json['endereco'];
-    faculdadeAnexo = json['faculdadeAnexo'];
+
     nome = json['nome'];
     nomeCompleto = json['nomeCompleto'];
     numeroMatriculaFaculdade = json['numeroMatriculaFaculdade'];
@@ -50,13 +52,19 @@ class UserModel {
     declaracaoEscolarAnexo = json['declaracaoEscolarAnexo'];
     comprovanteResidenciaAnexo = json['comprovanteResidenciaAnexo'];
     instituicao = json['instituicao'];
+    ativo = json['ativo'];
+    timeStampCriacao = json['timeStampCriacao'];
+    validade = json['validade'];
+
+    
   }
+
   String? cpf;
   String? curso;
   String? dataNascimento;
   String? email;
   String? endereco;
-  String? faculdadeAnexo;
+
   String? nome;
   String? nomeCompleto;
   String? numeroMatriculaFaculdade;
@@ -68,6 +76,10 @@ class UserModel {
   String? comprovanteResidenciaAnexo;
   String? instituicao;
   List? turno;
+  bool? ativo;
+  String? timeStampCriacao;
+  String? validade;
+
 
 
   Map<String, dynamic> toJson() {
@@ -75,8 +87,8 @@ class UserModel {
     map['cpf'] = cpf;
     map['dataNascimento'] = dataNascimento;
     map['email'] = email;
-    map['endereço'] = endereco;
-    map['faculdadeAnexo'] = faculdadeAnexo;
+    map['endereco'] = endereco;
+
     map['nome'] = nome;
     map['nomeCompleto'] = nomeCompleto;
     map['numeroMatriculaFaculdade'] = numeroMatriculaFaculdade;
@@ -89,6 +101,9 @@ class UserModel {
     map['declaracaoEscolarAnexo'] = declaracaoEscolarAnexo ;
     map['comprovanteResidenciaAnexo'] = comprovanteResidenciaAnexo ;
     map['instituicao'] = instituicao;
+    map['ativo'] = ativo;
+    map['timeStampCriacao'] = timeStampCriacao;
+    map['validade'] = validade;
 
     return map;
   }
