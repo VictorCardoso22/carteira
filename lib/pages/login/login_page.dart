@@ -20,6 +20,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool? isLoading = false;
+  FocusNode focusNodePassword = FocusNode();
   TextEditingController usernameController =
       new TextEditingController(text: "");
   TextEditingController passwordController =
@@ -82,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: SizedBox(
                   width: 328,
                   child: TextField(
+                    focusNode: focusNodePassword,
                     obscureText: true,
                     controller: passwordController,
                     decoration: InputDecoration(
@@ -98,6 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                   ? Center(child: CircularProgressIndicator())
                   : CustomPrimaryButton(
                       onPressed: () {
+                       focusNodePassword.unfocus();
                         trySignin();
                       },
                       titulo: 'Entrar',
@@ -184,7 +187,17 @@ class _LoginPageState extends State<LoginPage> {
       if (documentSnapshot.exists) {
          print('Document data: ${documentSnapshot.data()}');
         DataUser.dataUser = UserModel.fromJson(documentSnapshot.data());
-        Get.offAndToNamed("/navegacao");
+        if(DataUser.dataUser!.ativo == true){
+          Get.offAndToNamed("/navegacao");
+        } else{
+          setState(() {
+            DataUser.dataUser = null;
+            isLoading = false;
+            toastAviso("Seu cadastro está em análise", Colors.red, context);
+          });
+
+        }
+
         //User //documentSnapshot.data();
       }
     });

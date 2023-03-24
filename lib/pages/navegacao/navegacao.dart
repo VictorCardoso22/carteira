@@ -1,3 +1,4 @@
+import 'package:carteira/common_codes.dart';
 import 'package:carteira/design-system/components/colors.dart';
 import 'package:carteira/pages/dados/dados_page.dart';
 import 'package:carteira/pages/navegacao/home/home_page.dart';
@@ -21,7 +22,10 @@ class _NavegacaoPageState extends State<NavegacaoPage> {
     Container()
   ];
   void _onItemTapped(int index) {
-    if (index == 2) Get.offNamedUntil("/login", (route) => false);
+    if (index == 2) {
+      Get.offNamedUntil("/login", (route) => false);
+      DataUser.dataUser = null;
+    }
     setState(() {
       _selectedIndex = index;
     });
