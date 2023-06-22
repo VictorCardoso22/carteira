@@ -26,11 +26,11 @@ class _SplashPageState extends State<SplashPage> {
       color: kSupportLightColor,
       child: Center(
         child: SizedBox(
-          width: 240,
+          width: 280,
           child: Hero(
             tag: 'logo',
             child: Image.asset(
-              'assets/logo.png',
+              'assets/e-cart.png',
             ),
           ),
         ),

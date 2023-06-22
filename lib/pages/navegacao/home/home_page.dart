@@ -17,30 +17,33 @@ class _HomePageState extends State<HomePage> {
     return SingleChildScrollView(
       child: Column(
         children: [
+          const SizedBox(height: 32),
+          Wrap(
+            spacing: 28,
+            children: [
+              SizedBox(
+                width: 180,
+                child: Image.asset(
+                  'assets/e-cart.png',
+                ),
+              ),
+              SizedBox(
+                width: 120,
+                child: Image.asset(
+                  'assets/logo.png',
+                ),
+              ),
+            ],
+          ),
           Card(
             margin: const EdgeInsets.all(32),
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 32, vertical: 20.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      const Expanded(
-                          child: Text(
-                        'CARTEIRA DE TRANSPORTE ESTUDANTIL',
-                        style: kBodyLargeBold,
-                      )),
-                      SizedBox(
-                        width: 80,
-                        child: Image.asset(
-                          'assets/logo.png',
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,163 +53,100 @@ class _HomePageState extends State<HomePage> {
                         height: 100,
                         child: Image.network("${DataUser.dataUser!.fotoAnexo}"),
                       ),
-                      SizedBox(width: 20),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Aluno:',
-                              style: kBodyMediumBold,
-                            ),
-                            Text(
-                              '${DataUser.dataUser!.nomeCompleto}',
-                              softWrap: true,
-                              maxLines: 3,
-                              overflow: TextOverflow.clip,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Instituião',
-                              style: kBodyMediumBold,
-                            ),
-                            SizedBox(width: 20),
-                            Text('Ufal'),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Curso:',
-                              style: kBodyMediumBold,
-                            ),
-                            Text('${DataUser.dataUser!.curso}'),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'CPF',
-                              style: kBodyMediumBold,
-                            ),
-                            Text(
-                              '${DataUser.dataUser!.cpf}',
-                            ),
-                          ],
-                        ),
-                      ),
                       const SizedBox(width: 20),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Matricula:',
-                              style: kBodyMediumBold,
-                            ),
-                            Text(
-                                ' ${DataUser.dataUser!.numeroMatriculaFaculdade}'),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              'Turnos',
-                              style: kBodyMediumBold,
-                            ),
-                            Text('Vespertino'),
-                            Text('Noturno'),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              'Validade:',
-                              style: kBodyMediumBold,
-                            ),
-                            Text('xx/xx/xxxx'),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              'Código validador',
-                              style: kBodyMediumBold,
-                            ),
-                            Text('xxxx'),
-                            SizedBox(height: 8),
-                            Text('www.sitevalidador.com'),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: SizedBox(
-                          width: 60,
-                          height: 60,
-                          // color: Colors.amberAccent,
-                          child: Image.asset(
-                            'assets/qrcode.png',
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Aluno:',
+                            style: kBodyMediumBold,
                           ),
+                          Text(
+                            '${DataUser.dataUser!.nomeCompleto}',
+                            softWrap: true,
+                            maxLines: 3,
+                            overflow: TextOverflow.clip,
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'CPF',
+                            style: kBodyMediumBold,
+                          ),
+                          Text(
+                            '${DataUser.dataUser!.cpf}',
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Instituição',
+                    style: kBodyMediumBold,
+                  ),
+                  Text('${DataUser.dataUser!.instituicao}'),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Curso:',
+                    style: kBodyMediumBold,
+                  ),
+                  Text('${DataUser.dataUser!.curso}'),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Matricula:',
+                    style: kBodyMediumBold,
+                  ),
+                  Text('${DataUser.dataUser!.numeroMatriculaFaculdade}'),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Turnos',
+                    style: kBodyMediumBold,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: DataUser.dataUser!.turno != null
+                        ? ListView(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            children: DataUser.dataUser!.turno
+                                ?.map((e) => Text(e))
+                                .toList() as List<Text>,
+                          )
+                        : const Text('FALTA INFORMAR'),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Validade:',
+                    style: kBodyMediumBold,
+                  ),
+                  const Text('xx/xx/xxxx'),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Código validador',
+                            style: kBodyMediumBold,
+                          ),
+                          Text('xxxx'),
+                          SizedBox(height: 8),
+                          Text('www.sitevalidador.com'),
+                        ],
+                      ),
+                      const SizedBox(width: 16),
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        // color: Colors.amberAccent,
+                        child: Image.asset(
+                          'assets/qrcode.png',
                         ),
                       )
                     ],

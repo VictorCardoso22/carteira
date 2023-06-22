@@ -43,21 +43,21 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 80),
+              const SizedBox(height: 60),
               Center(
                 child: SizedBox(
-                  width: 200,
+                  width: 300,
                   child: Hero(
                     tag: 'logo',
                     child: Image.asset(
-                      'assets/logo.png',
+                      'assets/e-cart.png',
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 80),
+              const SizedBox(height: 60),
               const Text(
-                'Login',
+                'LOGIN',
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 328,
                   child: TextField(
                     controller: usernameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                     focusNode: focusNodePassword,
                     obscureText: true,
                     controller: passwordController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
@@ -97,10 +97,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 16),
               isLoading!
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : CustomPrimaryButton(
                       onPressed: () {
-                       focusNodePassword.unfocus();
+                        focusNodePassword.unfocus();
                         trySignin();
                       },
                       titulo: 'Entrar',
@@ -142,6 +142,27 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 titulo: 'Solicitar minha carteirinha',
               ),
+              const SizedBox(height: 32),
+              Wrap(
+                spacing: 18,
+                runSpacing: 16,
+                alignment: WrapAlignment.spaceBetween,
+                runAlignment: WrapAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 110,
+                    child: Image.asset(
+                      'assets/logo.png',
+                    ),
+                  ),
+                  SizedBox(
+                    width: 110,
+                    child: Image.asset(
+                      'assets/6code-t.png',
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
@@ -185,17 +206,16 @@ class _LoginPageState extends State<LoginPage> {
         .get()
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-         print('Document data: ${documentSnapshot.data()}');
+        print('Document data: ${documentSnapshot.data()}');
         DataUser.dataUser = UserModel.fromJson(documentSnapshot.data());
-        if(DataUser.dataUser!.ativo == true){
+        if (DataUser.dataUser!.ativo == true) {
           Get.offAndToNamed("/navegacao");
-        } else{
+        } else {
           setState(() {
             DataUser.dataUser = null;
             isLoading = false;
             toastAviso("Seu cadastro está em análise", Colors.red, context);
           });
-
         }
 
         //User //documentSnapshot.data();
