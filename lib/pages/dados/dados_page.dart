@@ -110,10 +110,11 @@ class _DadosPageState extends State<DadosPage> {
                                         context);
                                   }
                                 }
-
+                                debugPrint("aqui2");
                                 if (((_formKeys[_index].currentState!
                                     .validate()) && listTurnoBoolean) ??
                                     false) {
+                                  debugPrint("aqui1");
                                   continued();
                                   //print('continuando $isLastStep');
                                 }

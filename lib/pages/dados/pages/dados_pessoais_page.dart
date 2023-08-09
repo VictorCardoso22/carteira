@@ -59,17 +59,38 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
 
 
 
+  bool light = false;
 
   @override
   Widget build(BuildContext context) {
     
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
+      Row(
+        children: [
+          Switch(
+          // This bool value toggles the switch.
+          value: light,
+          activeColor: kPrimaryColor,
+          onChanged: (bool value) {
+            // This is called when the user toggles the switch.
+            setState(() {
+              light = value;
+              widget.isEnabled = value;
+            });
+          },
+    ),
+          Text( light ? "Editando" :  "Editar campos")
+        ],
+      ),
+        SizedBox(height: 8,),
         SizedBox(
           // width: 328,
           child: TextFormField(
-            enabled: widget.isEnabled,
+            enabled: false,
             controller: widget.textEditingControllerCpf,
             keyboardType: TextInputType.number,
             inputFormatters: [widget.maskFormatterCPF],
@@ -92,7 +113,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
-            enabled: widget.isEnabled,
+            enabled: false,
             controller: widget.textEditingControllerNomeCompleto,
             decoration: InputDecoration(
               border: OutlineInputBorder(
@@ -114,7 +135,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
-            enabled: widget.isEnabled,
+            enabled: false,
             controller: widget.textEditingControllerDataNascimento,
             inputFormatters: [widget.maskFormatterDataNascimento],
             decoration: InputDecoration(
@@ -140,7 +161,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               flex: 3,
               // width: 296,
               child: TextFormField(
-                enabled: widget.isEnabled,
+                enabled: false,
                 controller: widget.textEditingControllerRg,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -162,7 +183,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
             Expanded(
               // width: 90,
               child: TextFormField(
-                enabled: widget.isEnabled,
+                enabled: true,
                 controller: widget.textEditingControllerEmissor,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -335,7 +356,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
           ),
         ),
         SizedBox(height: 8),
-        SizedBox(
+        (DataUser.dataUser == null) ? SizedBox(
           // width: 328,
           child: TextFormField(
             enabled: widget.isEnabled,
@@ -357,7 +378,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               return null;
             },
           ),
-        ),
+        ) : Text("Esqueceu a senha?"),
         SizedBox(height: 20),
       ],
     );

@@ -1,7 +1,8 @@
 
 import 'package:carteira/model/user.dart';
 import 'package:flutter/material.dart';
-import 'package:toast/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 class GlobalTimeStamp {
   static DateTime now = DateTime.now();
@@ -12,11 +13,14 @@ class DataUser{
 }
 
 toastAviso(String aviso, Color color, BuildContext context) {
-  Toast.show(aviso,
-      duration: 6,
-      gravity: Toast.top,
-      backgroundRadius: 80,
-      backgroundColor: color);
+  Fluttertoast.showToast(
+      msg: aviso,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 3,
+      backgroundColor: color,
+      textColor: Colors.white,
+      fontSize: 16.0);
 }
 
 showAlertDialog(BuildContext context, String aviso)

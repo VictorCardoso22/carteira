@@ -7,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carteira/model/user.dart';
-import 'package:toast/toast.dart';
+
 
 import '../../design-system/buttons/custon_secondary_button.dart';
 
@@ -29,7 +29,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     initializeDefault();
-    ToastContext().init(context); // Configura o toast
     super.initState();
   }
 

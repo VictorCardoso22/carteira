@@ -19,7 +19,7 @@ dependencies:
   get:
   pdf: ^3.8.4
   printing: ^5.10.4
-  toast: ^0.3.0
+  fluttertoast: ^8.2.2
   firebase_core: ^2.4.1
   firebase_auth: ^4.2.5
   firebase_storage: ^11.0.10

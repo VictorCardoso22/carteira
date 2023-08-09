@@ -1,20 +1,40 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:carteira/common_codes.dart';
 import 'package:flutter/material.dart';
 
 class InstituicaoPage extends StatefulWidget {
-  InstituicaoPage({Key? key}) : super(key: key);
+  TextEditingController textEditingControllerInstituicaoDeEnsino = new TextEditingController();
+  TextEditingController textEditingControllerMatricula = new TextEditingController();
+  TextEditingController textEditingControllerCurso = new TextEditingController();
+  bool matutino = false;
+  bool vespertino = false;
+  bool noturno = false;
 
-  TextEditingController textEditingControllerInstituicaoDeEnsino =
-      new TextEditingController();
-  TextEditingController textEditingControllerMatricula =
-      new TextEditingController();
-  TextEditingController textEditingControllerTurno =
-      new TextEditingController();
-  TextEditingController textEditingControllerCurso =
-      new TextEditingController();
+  InstituicaoPage({Key? key}) : super(key: key) {
+    if(DataUser.dataUser != null){
+      textEditingControllerCurso.text = DataUser.dataUser!.curso!;
+     // listTurno = DataUser.dataUser!.turno as List<String>;
+      textEditingControllerMatricula.text = DataUser.dataUser!.numeroMatriculaFaculdade!;
+      textEditingControllerInstituicaoDeEnsino.text = DataUser.dataUser!.instituicao!;
+
+      DataUser.dataUser!.turno!.forEach((element) {
+        if(element == "matutino") matutino = true;
+        if(element == "verpertino") matutino = true;
+        if(element == "noturno") matutino = true;
+        listTurno.add("$element");
+      });
+    }
+
+  }
+
+
+
 
   List<String> listTurno = [];
+
+
+
 
 
   @override
@@ -23,9 +43,7 @@ class InstituicaoPage extends StatefulWidget {
 
 class _InstituicaoPageState extends State<InstituicaoPage> {
 
-  bool matutino = false;
-  bool vespertino = false;
-  bool noturno = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,14 +121,14 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                 Row(
                   children: [
                     Text("Matutino"),
-                    Checkbox( value: matutino, onChanged: (value){
+                    Checkbox( value: widget.matutino, onChanged: (value){
                       if(value!) {
                         widget.listTurno.add("matutino");
                       } else{
                         widget.listTurno.remove("matutino");
                       }
                       setState(() {
-                        matutino = value;
+                        widget.matutino = value;
                       });
                     }),
                   ],
@@ -118,14 +136,14 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                 Row(
                   children: [
                     Text("Vespertino"),
-                    Checkbox(value: vespertino, onChanged: (value){
+                    Checkbox(value: widget.vespertino, onChanged: (value){
                       if(value!) {
                         widget.listTurno.add("vespertino");
                       } else{
                         widget.listTurno.remove("vespertino");
                       }
                       setState(() {
-                        vespertino = value;
+                        widget.vespertino = value;
                       });
                     }),
                   ],
@@ -133,14 +151,14 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                 Row(
                   children: [
                     Text("Noturno"),
-                    Checkbox(value: noturno, onChanged: (value){
+                    Checkbox(value: widget.noturno, onChanged: (value){
                       if(value!) {
                         widget.listTurno.add("noturno");
                       } else{
                         widget.listTurno.remove("noturno");
                       }
                       setState(() {
-                        noturno = value;
+                        widget.noturno = value;
                       });
                     }),
                   ],
