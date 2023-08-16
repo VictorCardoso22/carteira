@@ -6,11 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Anexo extends StatelessWidget {
-  final XFile arquivo;
-  Uint8List webImage = Uint8List(8);
-  Anexo({Key? key, required this.arquivo, required this.webImage})
+  final String imagePath; // Para Celular
+  Uint8List imageUint8 = Uint8List(8); // Para Web
+  bool imageFromServer = false;
+  Anexo({Key? key, required this.imagePath, required this.imageUint8})
       : super(key: key) {
-    debugPrint("teste");
+    if(imagePath.contains("https://")){
+      imageFromServer = true;
+    }
   }
 
   @override
@@ -22,8 +25,8 @@ class Anexo extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: kIsWeb
-              ? Image.memory(webImage, fit: BoxFit.cover)
-              : Image.file(File(arquivo.path), fit: BoxFit.cover),
+              ? Image.memory(imageUint8, fit: BoxFit.cover)
+              : imageFromServer? Image.network(imagePath) : Image.file(File(imagePath), fit: BoxFit.cover),
         ),
       ),
     );

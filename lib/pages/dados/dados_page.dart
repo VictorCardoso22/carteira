@@ -264,11 +264,11 @@ class _DadosPageState extends State<DadosPage> {
     ///---------------------------------------------------------------------------------------------------///
     
     ///Step 3
-    userModel.rgFrenteAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoRgFrente!.path), nameFile: "rgFrente");
-    userModel.rgVersoAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoRgVerso!.path), nameFile: "rgVerso");
-    userModel.fotoAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoFoto!.path), nameFile: "fotoPerfil");
-    userModel.comprovanteResidenciaAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoComprovanteResidencia!.path), nameFile: "comprovanteResidencia");
-    userModel.declaracaoEscolarAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoDeclaracaoEscolar!.path), nameFile: "decalaracaoEscolar");
+    userModel.rgFrenteAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoRgFrenteFile!.path), nameFile: "rgFrente");
+    userModel.rgVersoAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoRgVersoFile!.path), nameFile: "rgVerso");
+    userModel.fotoAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoFotoFile!.path), nameFile: "fotoPerfil");
+    userModel.comprovanteResidenciaAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoComprovanteResidenciaFile!.path), nameFile: "comprovanteResidencia");
+    userModel.declaracaoEscolarAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoDeclaracaoEscolarFile!.path), nameFile: "decalaracaoEscolar");
     ///--------------------------------------------------------------------------------------------------///
 
     userModel.ativo = false; // O usuario tem que ser aprovado para ficar ativo
