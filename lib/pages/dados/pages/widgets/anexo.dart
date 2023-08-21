@@ -5,17 +5,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class Anexo extends StatelessWidget {
-  final String imagePath; // Para Celular
-  Uint8List imageUint8 = Uint8List(8); // Para Web
-  bool imageFromServer = false;
-  Anexo({Key? key, required this.imagePath, required this.imageUint8})
-      : super(key: key) {
-    if(imagePath.contains("https://")){
-      imageFromServer = true;
-    }
+class Anexo extends StatefulWidget {
+
+  Uint8List imageUint8; // Para Web
+
+  Anexo({Key? key,required this.imageUint8})
+      : super(key: UniqueKey()) {
+
   }
 
+  @override
+  State<Anexo> createState() => _AnexoState();
+}
+
+class _AnexoState extends State<Anexo> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,9 +27,9 @@ class Anexo extends StatelessWidget {
         height: 120,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          child: kIsWeb
-              ? Image.memory(imageUint8, fit: BoxFit.cover)
-              : imageFromServer? Image.network(imagePath) : Image.file(File(imagePath), fit: BoxFit.cover),
+          child:
+              Image.memory(widget.imageUint8, fit: BoxFit.cover)
+
         ),
       ),
     );

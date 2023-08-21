@@ -10,6 +10,7 @@ import 'package:carteira/pages/dados/pages/instituicao_page.dart';
 import 'package:carteira/pages/login/login_page.dart';
 import 'package:carteira/pages/navegacao/home/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -264,11 +265,11 @@ class _DadosPageState extends State<DadosPage> {
     ///---------------------------------------------------------------------------------------------------///
     
     ///Step 3
-    userModel.rgFrenteAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoRgFrenteFile!.path), nameFile: "rgFrente");
-    userModel.rgVersoAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoRgVersoFile!.path), nameFile: "rgVerso");
-    userModel.fotoAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoFotoFile!.path), nameFile: "fotoPerfil");
-    userModel.comprovanteResidenciaAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoComprovanteResidenciaFile!.path), nameFile: "comprovanteResidencia");
-    userModel.declaracaoEscolarAnexo = await addUserImages(file: File(widget.anexoPage!.arquivoDeclaracaoEscolarFile!.path), nameFile: "decalaracaoEscolar");
+    userModel.rgFrenteAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoRgFrentePath!), nameFile: "rgFrente");
+    userModel.rgVersoAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoRgVersoPath!), nameFile: "rgVerso");
+    userModel.fotoAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoFotoPath!), nameFile: "fotoPerfil");
+    userModel.comprovanteResidenciaAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoComprovanteResidenciaPath!), nameFile: "comprovanteResidencia");
+    userModel.declaracaoEscolarAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoDeclaracaoEscolarPath!), nameFile: "decalaracaoEscolar");
     ///--------------------------------------------------------------------------------------------------///
 
     userModel.ativo = false; // O usuario tem que ser aprovado para ficar ativo
@@ -282,14 +283,14 @@ class _DadosPageState extends State<DadosPage> {
     }).catchError((error) => print("Failed to add user: $error"));
   }
 
-  Future<String> addUserImages({File? file, nameFile}) async {
+  Future<String> addUserImages({XFile? file, nameFile}) async {
     final _firebaseStorage = FirebaseStorage.instance;
     User? user = FirebaseAuth.instance.currentUser;
     //Upload to Firebase
     var snapshot = await _firebaseStorage
         .ref()
         .child('${user!.uid}/$nameFile')
-        .putFile(file!);
+        .putData(await file!.readAsBytes());
     var downloadUrl = await snapshot.ref.getDownloadURL();
     setState(() {
       // imageUrl = downloadUrl;
