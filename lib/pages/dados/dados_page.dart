@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:carteira/common_codes.dart';
 import 'package:carteira/design-system/buttons/custon_primary_button.dart';
 import 'package:carteira/design-system/components/colors.dart';
+import 'package:carteira/model/endereco.dart';
 import 'package:carteira/model/user.dart';
 import 'package:carteira/pages/dados/pages/anexo_page.dart';
 import 'package:carteira/pages/dados/pages/dados_pessoais_page.dart';
@@ -97,7 +98,11 @@ class _DadosPageState extends State<DadosPage> {
                           onStepContinue: () {
                             final isLastStep = _index == getSteps().length - 1;
                             if (isLastStep) {
-                              registerUserFirebase();
+                              if(DataUser.dataUser == null) {
+                                registerUserFirebase();
+                              } else{
+                                alertDialogConfirmacaoAtualizar();
+                              }
 
                             } else {
                               setState(() {
@@ -130,7 +135,7 @@ class _DadosPageState extends State<DadosPage> {
                             children: [
                               widget.isCreating? Center(child: CircularProgressIndicator(),) : CustomPrimaryButton(
                                   titulo: _index == getSteps().length - 1
-                                      ? 'Enviar'
+                                      ? DataUser.dataUser == null? 'Enviar': 'Atualizar dados'
                                       : 'Avançar',
                                   onPressed: details.onStepContinue!),
                               const SizedBox(height: 10),
@@ -189,11 +194,30 @@ class _DadosPageState extends State<DadosPage> {
         ),
       ];
 
+  alertDialogConfirmacaoAtualizar() {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return buildAlertDialog(
+            context: context,
+            titulo: "Atualizar dados",
+            aceitar: "Confirmar",
+            cancelar: "Cancelar",
+            text:
+            "Ao clicar em confirmar, após validação dos dados, sua carteria será atualizada",
+            onPressedConfirma: () {
+            });
+      });
+}
+  updateUserFirebase(){
+
+  }
+
   registerUserFirebase() async {
     String email = widget.dadosPessoaisPage!.textEditingControllerEmail.text;
     String password = widget.dadosPessoaisPage!.textEditingControllerSenha.text;
-    debugPrint("$email aaaa");
-    debugPrint("$password bbb");
+   // debugPrint("$email aaaa");
+  //  debugPrint("$password bbb");
     UserCredential userCredential;
     // setState(() {
     //   isLoading = true;
@@ -246,15 +270,21 @@ class _DadosPageState extends State<DadosPage> {
     userModel.cpf = widget.dadosPessoaisPage!.maskFormatterCPF.unmaskText(cpfText); // Mandar cpf sem a mascara.
     userModel.rg = widget.dadosPessoaisPage!.textEditingControllerRg.text;
     userModel.dataNascimento = widget.dadosPessoaisPage!.textEditingControllerDataNascimento.text;
-    userModel.endereco =
-    """ 
-    Logradouro: ${widget.dadosPessoaisPage!.textEditingControllerLogradouro.text} 
-    Bairro: ${widget.dadosPessoaisPage!.textEditingControllerBairro.text}
-    Número: ${widget.dadosPessoaisPage!.textEditingControllerNumeroEndereco.text}
-    Complemento: ${widget.dadosPessoaisPage!.textEditingControllerComplemento.text}
-    """;
+    // userModel.endereco =
+    // """
+    // Logradouro: ${widget.dadosPessoaisPage!.textEditingControllerLogradouro.text}
+    // Bairro: ${widget.dadosPessoaisPage!.textEditingControllerBairro.text}
+    // Número: ${widget.dadosPessoaisPage!.textEditingControllerNumeroEndereco.text}
+    // Complemento: ${widget.dadosPessoaisPage!.textEditingControllerComplemento.text}
+    // """;
     ///--------------------------------------------------------------------------------------------------///
-    
+    String cep = widget.dadosPessoaisPage!.textEditingControllerCep.text;
+    userModel.endereco = Endereco(cep: widget.dadosPessoaisPage!.maskFormatterCEP.unmaskText(cep),
+        logradouro: '${widget.dadosPessoaisPage!.textEditingControllerLogradouro.text}',
+        bairro: '${widget.dadosPessoaisPage!.textEditingControllerBairro.text}',
+        numero: '${widget.dadosPessoaisPage!.textEditingControllerNumeroEndereco.text}',
+        complemento: '${widget.dadosPessoaisPage!.textEditingControllerComplemento.text}'
+    );
     ///Step 2
     userModel.email = widget.dadosPessoaisPage!.textEditingControllerEmail.text.trim();
     userModel.turno = widget.instituicaoPage!.listTurno;

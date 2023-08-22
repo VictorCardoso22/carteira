@@ -38,12 +38,12 @@ class DadosPessoaisPage extends StatefulWidget {
        textEditingControllerNomeCompleto.text = "${DataUser.dataUser!.nomeCompleto}";
        textEditingControllerDataNascimento.text = "${DataUser.dataUser!.dataNascimento}";
        textEditingControllerRg.text ="${DataUser.dataUser!.rg}";
-      // textEditingControllerEmissor.text = DataUser.dataUser!.e!; TODO falta adicionar emissor rg
-      // textEditingControllerCep.text = DataUser.dataUser!.!; TODO falta adicionar cep no banco
-       textEditingControllerLogradouro.text = "${DataUser.dataUser!.endereco}";
-      // textEditingControllerBairro.text = DataUser.dataUser!.!;
-     //  textEditingControllerNumeroEndereco.text =  DataUser.dataUser!.cpf!;
-     //  textEditingControllerComplemento.text = DataUser.dataUser!.cc!;
+       textEditingControllerEmissor.text = "${DataUser.dataUser!.rgEmissor}";
+       textEditingControllerCep.text = "${DataUser.dataUser!.endereco!.cep}";
+       textEditingControllerLogradouro.text = "${DataUser.dataUser!.endereco!.logradouro}";
+       textEditingControllerBairro.text = "${DataUser.dataUser!.endereco!.bairro}";
+       textEditingControllerNumeroEndereco.text =  "${DataUser.dataUser!.endereco!.numero}";
+       textEditingControllerComplemento.text = "${DataUser.dataUser!.endereco!.complemento}";
        textEditingControllerEmail.text = "${DataUser.dataUser!.email}";
       // textEditingControllerSenha.text =  DataUser.dataUser!.cpf!;
     }

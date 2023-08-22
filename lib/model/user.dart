@@ -1,3 +1,5 @@
+import 'package:carteira/model/endereco.dart';
+
 /// cpf : "01"
 /// dataNascimento : "01-07-2022"
 /// email : ""
@@ -21,7 +23,8 @@ class UserModel {
       this.nome, 
       this.nomeCompleto, 
       this.numeroMatriculaFaculdade, 
-      this.rg, 
+      this.rg,
+      this.rgEmissor,
       this.rgFrenteAnexo,
       this.rgVersoAnexo,
       this.declaracaoEscolarAnexo,
@@ -38,12 +41,12 @@ class UserModel {
     cpf = json['cpf'];
     dataNascimento = json['dataNascimento'];
     email = json['email'];
-    endereco = json['endereco'];
-
+    endereco = Endereco.fromJson(json['endereço']);
     nome = json['nome'];
     nomeCompleto = json['nomeCompleto'];
     numeroMatriculaFaculdade = json['numeroMatriculaFaculdade'];
     rg = json['rg'];
+    rgEmissor = json['rgEmissor'];
     rgFrenteAnexo = json['rgFrenteAnexo'];
     rgVersoAnexo = json['rgVersoAnexo'];
     curso = json['curso'];
@@ -63,12 +66,13 @@ class UserModel {
   String? curso;
   String? dataNascimento;
   String? email;
-  String? endereco;
+  Endereco? endereco;
 
   String? nome;
   String? nomeCompleto;
   String? numeroMatriculaFaculdade;
   String? rg;
+  String? rgEmissor;
   String? rgFrenteAnexo;
   String? rgVersoAnexo;
   String? fotoAnexo;
@@ -87,7 +91,7 @@ class UserModel {
     map['cpf'] = cpf;
     map['dataNascimento'] = dataNascimento;
     map['email'] = email;
-    map['endereco'] = endereco;
+    map['endereço'] = endereco;
 
     map['nome'] = nome;
     map['nomeCompleto'] = nomeCompleto;
@@ -104,6 +108,7 @@ class UserModel {
     map['ativo'] = ativo;
     map['timeStampCriacao'] = timeStampCriacao;
     map['validade'] = validade;
+    map['rgEmissor'] = rgEmissor;
 
     return map;
   }
