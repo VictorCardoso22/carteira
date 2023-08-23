@@ -35,6 +35,8 @@ class AnexoPage extends StatefulWidget {
   Uint8List? arquivoRgVersoUint8;
   Uint8List? arquivoComprovanteResidenciaUint8;
   Uint8List? arquivoDeclaracaoEscolarUint8;
+
+  bool loadingImages = false;
   
   @override
   State<AnexoPage> createState() => _AnexoPageState();
@@ -61,25 +63,27 @@ class _AnexoPageState extends State<AnexoPage> {
 
   getAnexosFromServer() async {
     if(DataUser.dataUser != null){
-
+      setState(() {
+        widget.loadingImages = true;
+      });
       //widget.arquivoFotoPath = DataUser.dataUser!.fotoAnexo;
-      Uri.parse(DataUser.dataUser!.fotoAnexo!).isAbsolute ? widget.arquivoFotoUint8 = await getImageUint8List(DataUser.dataUser!.fotoAnexo) : debugPrint("");
+      Uri.parse(DataUser.dataUser!.fotoAnexo!).isAbsolute ? widget.arquivoFotoUint8 = await getImageUint8List(DataUser.dataUser!.fotoAnexo) : null;
 
       //widget.arquivoRgFrentePath = DataUser.dataUser!.rgFrenteAnexo;
 
-      Uri.parse(DataUser.dataUser!.rgFrenteAnexo!).isAbsolute ? widget.arquivoRgFrenteUint8 = await getImageUint8List(DataUser.dataUser!.rgFrenteAnexo) : debugPrint("");
+      Uri.parse(DataUser.dataUser!.rgFrenteAnexo!).isAbsolute ? widget.arquivoRgFrenteUint8 = await getImageUint8List(DataUser.dataUser!.rgFrenteAnexo) : null;
 
       // widget.arquivoRgVersoPath = DataUser.dataUser!.rgVersoAnexo;
-      Uri.parse(DataUser.dataUser!.rgVersoAnexo!).isAbsolute ? widget.arquivoRgVersoUint8 = await getImageUint8List(DataUser.dataUser!.rgVersoAnexo) : debugPrint("");
+      Uri.parse(DataUser.dataUser!.rgVersoAnexo!).isAbsolute ? widget.arquivoRgVersoUint8 = await getImageUint8List(DataUser.dataUser!.rgVersoAnexo) : null;
 
       // widget.arquivoComprovanteResidenciaPath = DataUser.dataUser!.comprovanteResidenciaAnexo;
-      Uri.parse(DataUser.dataUser!.comprovanteResidenciaAnexo!).isAbsolute ? widget.arquivoComprovanteResidenciaUint8 = await getImageUint8List(DataUser.dataUser!.comprovanteResidenciaAnexo) : debugPrint("");
+      Uri.parse(DataUser.dataUser!.comprovanteResidenciaAnexo!).isAbsolute ? widget.arquivoComprovanteResidenciaUint8 = await getImageUint8List(DataUser.dataUser!.comprovanteResidenciaAnexo) : null;
 
       //  widget.arquivoDeclaracaoEscolarPath = DataUser.dataUser!.declaracaoEscolarAnexo;
-      Uri.parse(DataUser.dataUser!.declaracaoEscolarAnexo!).isAbsolute ? widget.arquivoDeclaracaoEscolarUint8 = await getImageUint8List(DataUser.dataUser!.declaracaoEscolarAnexo) : debugPrint("");
+      Uri.parse(DataUser.dataUser!.declaracaoEscolarAnexo!).isAbsolute ? widget.arquivoDeclaracaoEscolarUint8 = await getImageUint8List(DataUser.dataUser!.declaracaoEscolarAnexo) : null;
 
       setState(() {
-
+        widget.loadingImages = false;
       });
     }
 
@@ -178,9 +182,10 @@ class _AnexoPageState extends State<AnexoPage> {
           child: Stack(
             children: [
 
-              if (widget.arquivoFotoUint8 != null)
+              //if (widget.arquivoFotoUint8 != null || (widget.loadingImages))
                 Anexo(
-                    imageUint8: widget.arquivoFotoUint8!,
+                    imageUint8: widget.arquivoFotoUint8,
+                    isLoading: widget.loadingImages
                     ),
               Column(
                 children: [
@@ -270,12 +275,12 @@ class _AnexoPageState extends State<AnexoPage> {
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                 child: Stack(
                   children: [
-                    if (widget.arquivoRgFrenteUint8 != null)
+                    //if (widget.arquivoRgFrenteUint8 != null || (widget.loadingImages))
                       SizedBox(
                           width: 150,
                           child: Anexo(
-
-                              imageUint8: widget.arquivoRgFrenteUint8!)),
+                              isLoading: widget.loadingImages,
+                              imageUint8: widget.arquivoRgFrenteUint8)),
                     Column(
                       children: [
                         Align(
@@ -363,12 +368,12 @@ class _AnexoPageState extends State<AnexoPage> {
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                 child: Stack(
                   children: [
-                    if (widget.arquivoRgVersoUint8 != null)
+                    //if (widget.arquivoRgVersoUint8 != null || (widget.loadingImages))
                       SizedBox(
                           width: 150,
                           child: Anexo(
-
-                              imageUint8: widget.arquivoRgVersoUint8!)),
+                              isLoading: widget.loadingImages,
+                              imageUint8: widget.arquivoRgVersoUint8)),
                     Column(
                       children: [
                         Align(
@@ -452,10 +457,10 @@ class _AnexoPageState extends State<AnexoPage> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           child: Stack(
             children: [
-              if (widget.arquivoComprovanteResidenciaUint8 != null)
+              //if (widget.arquivoComprovanteResidenciaUint8 != null || (widget.loadingImages))
                 Anexo(
-
-                    imageUint8: widget.arquivoComprovanteResidenciaUint8!),
+                    isLoading: widget.loadingImages,
+                    imageUint8: widget.arquivoComprovanteResidenciaUint8),
               Column(
                 children: [
                   Align(
@@ -537,10 +542,10 @@ class _AnexoPageState extends State<AnexoPage> {
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           child: Stack(
             children: [
-              if (widget.arquivoDeclaracaoEscolarUint8 != null)
+              //if (widget.arquivoDeclaracaoEscolarUint8 != null || (widget.loadingImages))
                 Anexo(
-
-                    imageUint8: widget.arquivoDeclaracaoEscolarUint8!),
+                    isLoading: widget.loadingImages,
+                    imageUint8: widget.arquivoDeclaracaoEscolarUint8),
               Column(
                 children: [
                   Align(

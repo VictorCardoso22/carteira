@@ -14,9 +14,9 @@ class NavegacaoPage extends StatefulWidget {
 
 class _NavegacaoPageState extends State<NavegacaoPage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
+  TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static List<Widget> _widgetOptions = <Widget>[
+  List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     DadosPage(),
     Container()

@@ -7,9 +7,9 @@ import 'package:image_picker/image_picker.dart';
 
 class Anexo extends StatefulWidget {
 
-  Uint8List imageUint8; // Para Web
-
-  Anexo({Key? key,required this.imageUint8})
+  Uint8List? imageUint8; // Para Web
+  bool isLoading = false;
+  Anexo({Key? key,required this.imageUint8, required this.isLoading})
       : super(key: UniqueKey()) {
 
   }
@@ -25,10 +25,10 @@ class _AnexoState extends State<Anexo> {
       child: SizedBox(
         width: 340,
         height: 120,
-        child: ClipRRect(
+        child: widget.isLoading ? Center(child: CircularProgressIndicator(),) : ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child:
-              Image.memory(widget.imageUint8, fit: BoxFit.cover)
+            widget.imageUint8 != null? Image.memory(widget.imageUint8!, fit: BoxFit.cover): Center(child: Text("Adicionar foto do documento"),)
 
         ),
       ),

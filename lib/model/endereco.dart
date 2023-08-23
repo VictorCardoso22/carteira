@@ -49,11 +49,25 @@ Endereco copyWith({  String? cep,
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['cep'] = _cep;
-    map['logradouro'] = _logradouro;
-    map['bairro'] = _bairro;
-    map['numero'] = _numero;
-    map['complemento'] = _complemento;
+    if (_cep != null) {
+      map['cep'] = _cep;
+    }
+
+    if (_logradouro != null) {
+      map['logradouro'] = _logradouro;
+    }
+
+    if (_bairro != null) {
+      map['bairro'] = _bairro;
+    }
+
+    if (_numero != null) {
+      map['numero'] = _numero;
+    }
+
+    if (_complemento != null) {
+      map['complemento'] = _complemento;
+    }
     return map;
   }
 

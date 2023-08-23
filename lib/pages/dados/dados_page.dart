@@ -206,11 +206,23 @@ class _DadosPageState extends State<DadosPage> {
             text:
             "Ao clicar em confirmar, após validação dos dados, sua carteria será atualizada",
             onPressedConfirma: () {
+              updateUserFirebase();
             });
       });
 }
-  updateUserFirebase(){
-
+  updateUserFirebase() async {
+    setState(() {
+      widget.isCreating = true;
+      Navigator.of(context!).pop();
+    });
+    User? user = FirebaseAuth.instance.currentUser;
+    await addUserFirebase(user!.uid, true);
+    setState(() {
+      widget.isCreating = false;
+      Get.offNamedUntil("/login", (route) => false);
+      DataUser.dataUser = null;
+      toastAviso("Cadastro em análise", Colors.red, context);
+    });
   }
 
   registerUserFirebase() async {
@@ -260,7 +272,7 @@ class _DadosPageState extends State<DadosPage> {
     }
   }
 
-  addUserFirebase(String uidUser) async {
+  addUserFirebase(String uidUser, [bool isUpdate = false]) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     UserModel userModel = UserModel();
     ///Step 1
@@ -295,11 +307,11 @@ class _DadosPageState extends State<DadosPage> {
     ///---------------------------------------------------------------------------------------------------///
     
     ///Step 3
-    userModel.rgFrenteAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoRgFrentePath!), nameFile: "rgFrente");
-    userModel.rgVersoAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoRgVersoPath!), nameFile: "rgVerso");
-    userModel.fotoAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoFotoPath!), nameFile: "fotoPerfil");
-    userModel.comprovanteResidenciaAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoComprovanteResidenciaPath!), nameFile: "comprovanteResidencia");
-    userModel.declaracaoEscolarAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoDeclaracaoEscolarPath!), nameFile: "decalaracaoEscolar");
+    widget.anexoPage!.arquivoRgFrentePath == null? null : userModel.rgFrenteAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoRgFrentePath!), nameFile: "rgFrente");
+    widget.anexoPage!.arquivoRgVersoPath == null? null : userModel.rgVersoAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoRgVersoPath!), nameFile: "rgVerso");
+    widget.anexoPage!.arquivoFotoPath == null? null : userModel.fotoAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoFotoPath!), nameFile: "fotoPerfil");
+    widget.anexoPage!.arquivoComprovanteResidenciaPath == null? null : userModel.comprovanteResidenciaAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoComprovanteResidenciaPath!), nameFile: "comprovanteResidencia");
+    widget.anexoPage!.arquivoDeclaracaoEscolarPath == null? null : userModel.declaracaoEscolarAnexo = await addUserImages(file: XFile(widget.anexoPage!.arquivoDeclaracaoEscolarPath!), nameFile: "decalaracaoEscolar");
     ///--------------------------------------------------------------------------------------------------///
 
     userModel.ativo = false; // O usuario tem que ser aprovado para ficar ativo
@@ -307,7 +319,7 @@ class _DadosPageState extends State<DadosPage> {
     firestore
         .collection('users')
         .doc(uidUser)
-        .set(userModel.toJson())
+        .set(userModel.toJson() , SetOptions(merge: isUpdate))
         .then((value) {
       setState(() {});
     }).catchError((error) => print("Failed to add user: $error"));

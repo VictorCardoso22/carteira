@@ -88,27 +88,82 @@ class UserModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['cpf'] = cpf;
-    map['dataNascimento'] = dataNascimento;
-    map['email'] = email;
-    map['endereço'] = endereco;
 
-    map['nome'] = nome;
-    map['nomeCompleto'] = nomeCompleto;
-    map['numeroMatriculaFaculdade'] = numeroMatriculaFaculdade;
-    map['rg'] = rg;
-    map['rgFrenteAnexo'] = rgFrenteAnexo;
-    map['rgVersoAnexo'] = rgVersoAnexo;
-    map['curso'] = curso;
-    map['turno'] = turno;
-    map['fotoAnexo'] = fotoAnexo;
-    map['declaracaoEscolarAnexo'] = declaracaoEscolarAnexo ;
-    map['comprovanteResidenciaAnexo'] = comprovanteResidenciaAnexo ;
-    map['instituicao'] = instituicao;
-    map['ativo'] = ativo;
-    map['timeStampCriacao'] = timeStampCriacao;
-    map['validade'] = validade;
-    map['rgEmissor'] = rgEmissor;
+    if (cpf != null) {
+      map['cpf'] = cpf;
+    }
+
+    if (dataNascimento != null) {
+      map['dataNascimento'] = dataNascimento;
+    }
+
+    if (email != null) {
+      map['email'] = email;
+    }
+
+    if (endereco != null) {
+      map['endereço'] = endereco!.toJson();
+    }
+
+    if (nome != null) {
+      map['nome'] = nome;
+    }
+
+    if (nomeCompleto != null) {
+      map['nomeCompleto'] = nomeCompleto;
+    }
+
+    if (numeroMatriculaFaculdade != null) {
+      map['numeroMatriculaFaculdade'] = numeroMatriculaFaculdade;
+    }
+
+    if (rg != null) {
+      map['rg'] = rg;
+    }
+
+    if (rgFrenteAnexo != null) {
+      map['rgFrenteAnexo'] = rgFrenteAnexo;
+    }
+
+    if (rgVersoAnexo != null) {
+      map['rgVersoAnexo'] = rgVersoAnexo;
+    }
+
+    if (curso != null) {
+      map['curso'] = curso;
+    }
+
+    if (turno != null) {
+      map['turno'] = turno;
+    }
+
+    if (fotoAnexo != null) {
+      map['fotoAnexo'] = fotoAnexo;
+    }
+
+    if (declaracaoEscolarAnexo != null) {
+      map['declaracaoEscolarAnexo'] = declaracaoEscolarAnexo;
+    }
+
+    if (comprovanteResidenciaAnexo != null) {
+      map['comprovanteResidenciaAnexo'] = comprovanteResidenciaAnexo;
+    }
+
+    if (instituicao != null) {
+      map['instituicao'] = instituicao;
+    }
+
+    if (ativo != null) {
+      map['ativo'] = ativo;
+    }
+
+    if (timeStampCriacao != null) {
+      map['timeStampCriacao'] = timeStampCriacao;
+    }
+
+    if (validade != null) {
+      map['validade'] = validade;
+    }
 
     return map;
   }
