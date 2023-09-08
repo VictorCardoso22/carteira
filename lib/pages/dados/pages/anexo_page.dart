@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:camera_camera/camera_camera.dart';
 import 'package:carteira/common_codes.dart';
 import 'package:carteira/design-system/components/colors.dart';
+import 'package:carteira/pages/dados/pages/widgets/icon_button_foto.dart';
+import 'package:carteira/pages/dados/pages/widgets/icon_button_picker.dart';
+import 'package:carteira/pages/dados/pages/widgets/icon_button_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,13 +40,14 @@ class AnexoPage extends StatefulWidget {
   Uint8List? arquivoDeclaracaoEscolarUint8;
 
   bool loadingImages = false;
-  
+  bool isEnabled = true;
+
   @override
-  State<AnexoPage> createState() => _AnexoPageState();
+  State<AnexoPage> createState() => AnexoPageState();
 
 }
 
-class _AnexoPageState extends State<AnexoPage> {
+class AnexoPageState extends State<AnexoPage> {
   XFile? _pickedImage;
   Uint8List uint8Image = Uint8List(8);
 
@@ -63,6 +67,7 @@ class _AnexoPageState extends State<AnexoPage> {
 
   getAnexosFromServer() async {
     if(DataUser.dataUser != null){
+      widget.isEnabled = false;
       setState(() {
         widget.loadingImages = true;
       });
@@ -135,29 +140,29 @@ class _AnexoPageState extends State<AnexoPage> {
   }
 
   showPreview(String arquivo, File file) async {
-    file = await Get.to(() => PreviewPage(file: file));
+    Uint8List fileReturn = await Get.to(() => PreviewPage(fileUint: file.readAsBytesSync(), readMode: false,));
     /// TODO Verificar quando imagem não é confirmada
-    if (file != null) {
+    if (fileReturn != null) {
       Get.back();
     }
     if (arquivo == "arquivoFoto") {
-      widget.arquivoFotoUint8 = await XFile(file.path).readAsBytes();
+      widget.arquivoFotoUint8 = fileReturn;
       widget.arquivoFotoPath = file.path;
     }
     if (arquivo == "arquivoRgFrente") {
-      widget.arquivoRgFrenteUint8 = await XFile(file.path).readAsBytes();
+      widget.arquivoRgFrenteUint8 = fileReturn;
       widget.arquivoRgFrentePath = file.path;
     }
     if (arquivo == "arquivoRgVerso") {
-      widget.arquivoRgVersoUint8 = await XFile(file.path).readAsBytes();
+      widget.arquivoRgVersoUint8 = fileReturn;
       widget.arquivoRgVersoPath = file.path;
     }
     if (arquivo == "arquivoComprovanteResidencia") {
-      widget.arquivoComprovanteResidenciaUint8 = await XFile(file.path).readAsBytes();
+      widget.arquivoComprovanteResidenciaUint8 = fileReturn;
       widget.arquivoComprovanteResidenciaPath = file.path;
     }
     if (arquivo == "arquivoDeclaracaoEscolar") {
-      widget.arquivoDeclaracaoEscolarUint8 = await XFile(file.path).readAsBytes();
+      widget.arquivoDeclaracaoEscolarUint8 = fileReturn;
       widget.arquivoDeclaracaoEscolarPath = file.path;
     }
 
@@ -170,8 +175,27 @@ class _AnexoPageState extends State<AnexoPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+
+        Row(
+          children: [
+            Switch(
+              // This bool value toggles the switch.
+              value: widget.isEnabled,
+              activeColor: kPrimaryColor,
+              onChanged: (bool value) {
+                // This is called when the user toggles the switch.
+                setState(() {
+
+                  widget.isEnabled = value;
+                });
+              },
+            ),
+            Text( widget.isEnabled ? "Editando" :  "Editar campos")
+          ],
+        ),
+        SizedBox(height: 8,),
         Container(
-          width: 382,
+          width: 380,
           height: 120,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -204,50 +228,19 @@ class _AnexoPageState extends State<AnexoPage> {
                         )),
                   ),
                   Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          color: kPrimaryLightColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: IconButton(
-                          onPressed: (() => Get.to(
-                                () => CameraCamera(
-                                  onFile: (File file) =>
-                                      showPreview("arquivoFoto", file),
-                                ),
-                              )),
-                          icon: const Icon(
-                            Icons.camera_alt,
-                            color: kPrimaryColor,
-                          ),
-                          // child: Text("Tire uma Foto"),
-                        ),
-                      ),
-                      const SizedBox(width: 32),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          color: kPrimaryLightColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: IconButton(
-                          onPressed: (() => getFileFromGallery(
-                               "arquivoFoto")),
-
-                          icon: const Icon(
-                            Icons.drive_file_move_rounded,
-                            color: kPrimaryColor,
-                          ),
-                          // child: Text("Anexar imagem"),
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    width: 380,
+                    height: 40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButtonFoto(isEnabled: widget.isEnabled, anexoPageState: this, stringArquivo: "arquivoFoto"),
+                        const SizedBox(width: 16),
+                        IconButtonPicker(isEnabled: widget.isEnabled, anexoPageState: this, stringArquivo: "arquivoFoto"),
+                        const SizedBox(width: 16),
+                        IconButtonPreview(isEnabled: widget.arquivoFotoUint8 == null? false : true, anexoPageState: this, uint8Arquivo: widget.arquivoFotoUint8)
+                      ],
+                    ),
                   ),
                 ],
               )
@@ -277,7 +270,7 @@ class _AnexoPageState extends State<AnexoPage> {
                   children: [
                     //if (widget.arquivoRgFrenteUint8 != null || (widget.loadingImages))
                       SizedBox(
-                          width: 150,
+                          width: 180,
                           child: Anexo(
                               isLoading: widget.loadingImages,
                               imageUint8: widget.arquivoRgFrenteUint8)),
@@ -299,52 +292,16 @@ class _AnexoPageState extends State<AnexoPage> {
                         ),
                         Spacer(),
                         SizedBox(
-                          // width: 300,
+                          width: 180,
                           height: 40,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                width: 38,
-                                height: 38,
-                                decoration: BoxDecoration(
-                                  color: kPrimaryLightColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: IconButton(
-                                  onPressed: (() => Get.to(
-                                        () => CameraCamera(
-                                          onFile: (File file) => showPreview(
-                                              "arquivoRgFrente", file),
-                                        ),
-                                      )),
-                                  icon: const Icon(
-                                    Icons.camera_alt,
-                                    color: kPrimaryColor,
-                                  ),
-                                  // child: Text("Tire uma Foto"),
-                                ),
-                              ),
-                              const SizedBox(width: 30),
-                              Container(
-                                width: 38,
-                                height: 38,
-                                decoration: BoxDecoration(
-                                  color: kPrimaryLightColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: IconButton(
-                                  onPressed: (() => getFileFromGallery(
-
-                                      "arquivoRgFrente")),
-
-                                  icon: const Icon(
-                                    Icons.drive_file_move_rounded,
-                                    color: kPrimaryColor,
-                                  ),
-                                  // child: Text("Anexar imagem"),
-                                ),
-                              ),
+                            mainAxisAlignment: MainAxisAlignment.start, // arquivoRgFrente
+                            children:[
+                              IconButtonFoto(isEnabled: widget.isEnabled, anexoPageState: this, stringArquivo: "arquivoRgFrente"),
+                              const SizedBox(width: 16),
+                              IconButtonPicker(isEnabled: widget.isEnabled, anexoPageState: this, stringArquivo: "arquivoRgFrente"),
+                              const SizedBox(width: 16),
+                              IconButtonPreview(isEnabled: widget.arquivoRgFrenteUint8 == null? false : true, anexoPageState: this, uint8Arquivo: widget.arquivoRgFrenteUint8)
                             ],
                           ),
                         ),
@@ -370,7 +327,7 @@ class _AnexoPageState extends State<AnexoPage> {
                   children: [
                     //if (widget.arquivoRgVersoUint8 != null || (widget.loadingImages))
                       SizedBox(
-                          width: 150,
+                          width: 180,
                           child: Anexo(
                               isLoading: widget.loadingImages,
                               imageUint8: widget.arquivoRgVersoUint8)),
@@ -391,50 +348,19 @@ class _AnexoPageState extends State<AnexoPage> {
                               )),
                         ),
                         Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              width: 38,
-                              height: 38,
-                              decoration: BoxDecoration(
-                                color: kPrimaryLightColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: IconButton(
-                                onPressed: (() => Get.to(
-                                      () => CameraCamera(
-                                        onFile: (File file) =>
-                                            showPreview("arquivoRgVerso", file),
-                                      ),
-                                    )),
-                                icon: const Icon(
-                                  Icons.camera_alt,
-                                  color: kPrimaryColor,
-                                ),
-                                // child: Text("Tire uma Foto"),
-                              ),
-                            ),
-                            const SizedBox(width: 30),
-                            Container(
-                              width: 38,
-                              height: 38,
-                              decoration: BoxDecoration(
-                                color: kPrimaryLightColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: IconButton(
-                                onPressed: (() => getFileFromGallery(
-                                     "arquivoRgVerso")),
-
-                                icon: const Icon(
-                                  Icons.drive_file_move_rounded,
-                                  color: kPrimaryColor,
-                                ),
-                                // child: Text("Anexar imagem"),
-                              ),
-                            ),
-                          ],
+                        SizedBox(
+                          width: 180,
+                          height: 40,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start, // arquivoRgVerso
+                            children: [
+                              IconButtonFoto(isEnabled: widget.isEnabled, anexoPageState: this, stringArquivo: "arquivoRgVerso"),
+                              const SizedBox(width: 16),
+                              IconButtonPicker(isEnabled: widget.isEnabled, anexoPageState: this, stringArquivo: "arquivoRgVerso"),
+                              const SizedBox(width: 16),
+                              IconButtonPreview(isEnabled: widget.arquivoRgVersoUint8 == null? false : true, anexoPageState: this, uint8Arquivo: widget.arquivoRgVersoUint8)
+                            ],
+                          ),
                         ),
                       ],
                     )
@@ -447,7 +373,7 @@ class _AnexoPageState extends State<AnexoPage> {
         const SizedBox(height: 28),
         // Comprovante de Residência
         Container(
-          width: 382,
+          width: 380,
           height: 120,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -478,51 +404,18 @@ class _AnexoPageState extends State<AnexoPage> {
                         )),
                   ),
                   Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          color: kPrimaryLightColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: IconButton(
-                          onPressed: (() => Get.to(
-                                () => CameraCamera(
-                                  onFile: (File file) => showPreview(
-                                      "arquivoComprovanteResidencia", file),
-                                ),
-                              )),
-                          icon: const Icon(
-                            Icons.camera_alt,
-                            color: kPrimaryColor,
-                          ),
-                          // child: Text("Tire uma Foto"),
-                        ),
-                      ),
-                      const SizedBox(width: 32),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          color: kPrimaryLightColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: IconButton(
-                          onPressed: (() => getFileFromGallery(
-
-                              "arquivoComprovanteResidencia")),
-
-                          icon: const Icon(
-                            Icons.drive_file_move_rounded,
-                            color: kPrimaryColor,
-                          ),
-                          // child: Text("Anexar imagem"),
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    width: 380,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start, // arquivoComprovanteResidencia
+                      children: [
+                        IconButtonFoto(isEnabled: widget.isEnabled, anexoPageState: this, stringArquivo: "arquivoComprovanteResidencia"),
+                        const SizedBox(width: 16),
+                        IconButtonPicker(isEnabled: widget.isEnabled, anexoPageState: this, stringArquivo: "arquivoComprovanteResidencia"),
+                        const SizedBox(width: 16),
+                        IconButtonPreview(isEnabled: widget.arquivoComprovanteResidenciaUint8 == null? false : true, anexoPageState: this, uint8Arquivo: widget.arquivoComprovanteResidenciaUint8)
+                      ],
+                    ),
                   ),
                 ],
               )
@@ -532,7 +425,7 @@ class _AnexoPageState extends State<AnexoPage> {
         const SizedBox(height: 28),
         // Declaração Escolar
         Container(
-          width: 382,
+          width: 380,
           height: 120,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -563,51 +456,18 @@ class _AnexoPageState extends State<AnexoPage> {
                         )),
                   ),
                   Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          color: kPrimaryLightColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: IconButton(
-                          onPressed: (() => Get.to(
-                                () => CameraCamera(
-                                  onFile: (File file) => showPreview(
-                                      "arquivoDeclaracaoEscolar", file),
-                                ),
-                              )),
-                          icon: const Icon(
-                            Icons.camera_alt,
-                            color: kPrimaryColor,
-                          ),
-                          // child: Text("Tire uma Foto"),
-                        ),
-                      ),
-                      const SizedBox(width: 32),
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          color: kPrimaryLightColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: IconButton(
-                          onPressed: (() => getFileFromGallery(
-
-                              "arquivoDeclaracaoEscolar")),
-
-                          icon: const Icon(
-                            Icons.drive_file_move_rounded,
-                            color: kPrimaryColor,
-                          ),
-                          // child: Text("Anexar imagem"),
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    width: 380,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start, // arquivoDeclaracaoEscolar
+                      children: [
+                        IconButtonFoto(isEnabled: widget.isEnabled, anexoPageState: this, stringArquivo: "arquivoDeclaracaoEscolar"),
+                        const SizedBox(width: 16),
+                        IconButtonPicker(isEnabled: widget.isEnabled, anexoPageState: this, stringArquivo: "arquivoDeclaracaoEscolar"),
+                        const SizedBox(width: 16),
+                        IconButtonPreview(isEnabled: widget.arquivoDeclaracaoEscolarUint8 == null? false : true, anexoPageState: this, uint8Arquivo: widget.arquivoDeclaracaoEscolarUint8)
+                      ],
+                    ),
                   ),
                 ],
               )

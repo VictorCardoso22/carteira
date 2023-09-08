@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:carteira/common_codes.dart';
+import 'package:carteira/design-system/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class InstituicaoPage extends StatefulWidget {
@@ -10,9 +11,11 @@ class InstituicaoPage extends StatefulWidget {
   bool matutino = false;
   bool vespertino = false;
   bool noturno = false;
+  bool isEnabled = true;
 
   InstituicaoPage({Key? key}) : super(key: key) {
     if(DataUser.dataUser != null){
+      isEnabled = false;
       textEditingControllerCurso.text = DataUser.dataUser!.curso!;
      // listTurno = DataUser.dataUser!.turno as List<String>;
       textEditingControllerMatricula.text = DataUser.dataUser!.numeroMatriculaFaculdade!;
@@ -20,22 +23,15 @@ class InstituicaoPage extends StatefulWidget {
 
       DataUser.dataUser!.turno!.forEach((element) {
         if(element == "matutino") matutino = true;
-        if(element == "verpertino") matutino = true;
-        if(element == "noturno") matutino = true;
+        if(element == "vespertino") vespertino = true;
+        if(element == "noturno") noturno = true;
         listTurno.add("$element");
       });
     }
 
   }
 
-
-
-
   List<String> listTurno = [];
-
-
-
-
 
   @override
   State<InstituicaoPage> createState() => _InstituicaoPageState();
@@ -49,10 +45,30 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+
+        Row(
+          children: [
+            Switch(
+              // This bool value toggles the switch.
+              value: widget.isEnabled,
+              activeColor: kPrimaryColor,
+              onChanged: (bool value) {
+                // This is called when the user toggles the switch.
+                setState(() {
+
+                  widget.isEnabled = value;
+                });
+              },
+            ),
+            Text( widget.isEnabled ? "Editando" :  "Editar campos")
+          ],
+        ),
+        SizedBox(height: 8,),
         SizedBox(
           // width: 328,
           child: TextFormField(
             controller: widget.textEditingControllerInstituicaoDeEnsino,
+            enabled: widget.isEnabled,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -75,6 +91,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
           // width: 328,
           child: TextFormField(
             controller: widget.textEditingControllerCurso,
+            enabled: widget.isEnabled,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -95,6 +112,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
           // width: 328,
           child: TextFormField(
             controller: widget.textEditingControllerMatricula,
+            enabled: widget.isEnabled,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -121,7 +139,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                 Row(
                   children: [
                     Text("Matutino"),
-                    Checkbox( value: widget.matutino, onChanged: (value){
+                    Checkbox( value: widget.matutino,  onChanged: widget.isEnabled? (value){
                       if(value!) {
                         widget.listTurno.add("matutino");
                       } else{
@@ -130,13 +148,13 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                       setState(() {
                         widget.matutino = value;
                       });
-                    }),
+                    } : null),
                   ],
                 ),
                 Row(
                   children: [
                     Text("Vespertino"),
-                    Checkbox(value: widget.vespertino, onChanged: (value){
+                    Checkbox(value: widget.vespertino, onChanged: widget.isEnabled?  (value){
                       if(value!) {
                         widget.listTurno.add("vespertino");
                       } else{
@@ -145,13 +163,13 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                       setState(() {
                         widget.vespertino = value;
                       });
-                    }),
+                    }: null),
                   ],
                 ),
                 Row(
                   children: [
                     Text("Noturno"),
-                    Checkbox(value: widget.noturno, onChanged: (value){
+                    Checkbox(value: widget.noturno, onChanged: widget.isEnabled? (value){
                       if(value!) {
                         widget.listTurno.add("noturno");
                       } else{
@@ -160,7 +178,7 @@ class _InstituicaoPageState extends State<InstituicaoPage> {
                       setState(() {
                         widget.noturno = value;
                       });
-                    }),
+                    }: null),
                   ],
                 )
               ],),

@@ -10,6 +10,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 class DadosPessoaisPage extends StatefulWidget {
   String? cpf;
   bool isEnabled = true;
+  bool firstSignin;
   TextEditingController textEditingControllerCpf = TextEditingController();
   TextEditingController textEditingControllerNomeCompleto = TextEditingController();
   TextEditingController textEditingControllerDataNascimento = TextEditingController();
@@ -29,7 +30,7 @@ class DadosPessoaisPage extends StatefulWidget {
 
 
 
-  DadosPessoaisPage({Key? key, this.cpf}) : super(key: key) {
+  DadosPessoaisPage({Key? key, this.cpf, required this.firstSignin}) : super(key: key) {
     if(DataUser.dataUser == null){
       textEditingControllerCpf.text = maskFormatterCPF.maskText(cpf!);
     } else{
@@ -57,10 +58,6 @@ class DadosPessoaisPage extends StatefulWidget {
 
 class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
 
-
-
-  bool light = false;
-
   @override
   Widget build(BuildContext context) {
     
@@ -73,17 +70,17 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         children: [
           Switch(
           // This bool value toggles the switch.
-          value: light,
+          value: widget.isEnabled,
           activeColor: kPrimaryColor,
           onChanged: (bool value) {
             // This is called when the user toggles the switch.
             setState(() {
-              light = value;
+
               widget.isEnabled = value;
             });
           },
     ),
-          Text( light ? "Editando" :  "Editar campos")
+          Text( widget.isEnabled ? "Editando" :  "Editar campos")
         ],
       ),
         SizedBox(height: 8,),
@@ -113,7 +110,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
-            enabled: false,
+            enabled: widget.firstSignin,
             controller: widget.textEditingControllerNomeCompleto,
             decoration: InputDecoration(
               border: OutlineInputBorder(
@@ -135,7 +132,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
         SizedBox(
           // width: 328,
           child: TextFormField(
-            enabled: false,
+            enabled: widget.firstSignin,
             controller: widget.textEditingControllerDataNascimento,
             inputFormatters: [widget.maskFormatterDataNascimento],
             decoration: InputDecoration(
@@ -161,7 +158,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
               flex: 3,
               // width: 296,
               child: TextFormField(
-                enabled: false,
+                enabled: widget.firstSignin,
                 controller: widget.textEditingControllerRg,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -183,7 +180,7 @@ class _DadosPessoaisPageState extends State<DadosPessoaisPage> {
             Expanded(
               // width: 90,
               child: TextFormField(
-                enabled: true,
+                enabled: widget.isEnabled,
                 controller: widget.textEditingControllerEmissor,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(

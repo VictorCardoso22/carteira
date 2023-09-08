@@ -1,11 +1,14 @@
 import 'dart:io';
 
+import 'package:cross_file/cross_file.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PreviewPage extends StatelessWidget {
-  File file;
-  PreviewPage({Key? key, required this.file}) : super(key: key);
+  Uint8List fileUint;
+  bool readMode;
+  PreviewPage({Key? key, required this.fileUint, required this.readMode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +19,15 @@ class PreviewPage extends StatelessWidget {
             child: Stack(
               children: [
                 Positioned.fill(
-                  child: Image.file(
-                    file,
+                  child: Image.memory(
+                     fileUint,
                     fit: BoxFit.cover,
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Align(
+                  if(readMode == false)  Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: EdgeInsets.all(32),
@@ -37,7 +40,7 @@ class PreviewPage extends StatelessWidget {
                               color: Colors.white,
                               size: 30,
                             ),
-                            onPressed: () => Get.back(result: file),
+                            onPressed: () => Get.back(result: fileUint),
                           ),
                         ),
                       ),

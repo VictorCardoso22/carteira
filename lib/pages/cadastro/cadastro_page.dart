@@ -113,7 +113,7 @@ class CadastroPage extends StatelessWidget {
       debugPrint('$cpfUnmask');
       debugPrint('Document data: ${querySnapshot.docs}');
       if (querySnapshot.size == 0) {
-        Get.to(DadosPage(cpf: cpfUnmask,));
+        Get.to(DadosPage(cpf: cpfUnmask, firstSignin: true,));
       } else if (querySnapshot.size >= 0) {
         toastAviso("Esse cpf já está cadastrado", Colors.red, context);
       }

@@ -18,7 +18,7 @@ class _NavegacaoPageState extends State<NavegacaoPage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    DadosPage(),
+    DadosPage(firstSignin: false,),
     Container()
   ];
   void _onItemTapped(int index) {

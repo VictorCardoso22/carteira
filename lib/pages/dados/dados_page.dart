@@ -25,8 +25,10 @@ class DadosPage extends StatefulWidget {
   AnexoPage? anexoPage;
   bool isCreating = false;
 
-   DadosPage({Key? key, this.cpf}) : super(key: key) {
-     dadosPessoaisPage = DadosPessoaisPage(cpf: cpf,);
+  bool firstSignin;
+
+   DadosPage({Key? key, this.cpf, this.firstSignin = false}) : super(key: key) {
+     dadosPessoaisPage = DadosPessoaisPage(cpf: cpf, firstSignin: firstSignin,);
      instituicaoPage = InstituicaoPage();
      anexoPage = AnexoPage();
    }
@@ -58,12 +60,15 @@ class _DadosPageState extends State<DadosPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 22, vertical: 38),
                   child: Column(
+
                     children: [
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
+
                         children: [
-                          IconButton(
+                          if(DataUser.dataUser == null)  IconButton(
+                            padding: EdgeInsets.only(right: 100),
                             onPressed: () {
                               Get.back();
                               // Navigator.of(context).popAndPushNamed("/cadastro");
@@ -73,18 +78,20 @@ class _DadosPageState extends State<DadosPage> {
                               color: kPrimaryColor,
                             ),
                           ),
-                          const SizedBox(width: 100),
-                          const Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Cadastro',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: kPrimaryColor,
+
+                           Container(
+                             child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                DataUser.dataUser == null ? 'Cadastro' : 'Dados',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: kPrimaryColor,
+                                ),
                               ),
-                            ),
                           ),
+                           ),
                         ],
                       ),
                       const SizedBox(height: 30),
