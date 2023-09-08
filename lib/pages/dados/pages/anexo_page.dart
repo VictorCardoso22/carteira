@@ -140,7 +140,7 @@ class AnexoPageState extends State<AnexoPage> {
   }
 
   showPreview(String arquivo, File file) async {
-    Uint8List fileReturn = await Get.to(() => PreviewPage(fileUint: file.readAsBytesSync(), readMode: false,));
+    Uint8List? fileReturn = await Get.to(() => PreviewPage(fileUint: file.readAsBytesSync(), readMode: false,));
 
     if (fileReturn != null) {
       Get.back();
