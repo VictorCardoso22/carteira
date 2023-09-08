@@ -141,31 +141,30 @@ class AnexoPageState extends State<AnexoPage> {
 
   showPreview(String arquivo, File file) async {
     Uint8List fileReturn = await Get.to(() => PreviewPage(fileUint: file.readAsBytesSync(), readMode: false,));
-    /// TODO Verificar quando imagem não é confirmada
+
     if (fileReturn != null) {
       Get.back();
+      if (arquivo == "arquivoFoto") {
+        widget.arquivoFotoUint8 = fileReturn;
+        widget.arquivoFotoPath = file.path;
+      }
+      if (arquivo == "arquivoRgFrente") {
+        widget.arquivoRgFrenteUint8 = fileReturn;
+        widget.arquivoRgFrentePath = file.path;
+      }
+      if (arquivo == "arquivoRgVerso") {
+        widget.arquivoRgVersoUint8 = fileReturn;
+        widget.arquivoRgVersoPath = file.path;
+      }
+      if (arquivo == "arquivoComprovanteResidencia") {
+        widget.arquivoComprovanteResidenciaUint8 = fileReturn;
+        widget.arquivoComprovanteResidenciaPath = file.path;
+      }
+      if (arquivo == "arquivoDeclaracaoEscolar") {
+        widget.arquivoDeclaracaoEscolarUint8 = fileReturn;
+        widget.arquivoDeclaracaoEscolarPath = file.path;
+      }
     }
-    if (arquivo == "arquivoFoto") {
-      widget.arquivoFotoUint8 = fileReturn;
-      widget.arquivoFotoPath = file.path;
-    }
-    if (arquivo == "arquivoRgFrente") {
-      widget.arquivoRgFrenteUint8 = fileReturn;
-      widget.arquivoRgFrentePath = file.path;
-    }
-    if (arquivo == "arquivoRgVerso") {
-      widget.arquivoRgVersoUint8 = fileReturn;
-      widget.arquivoRgVersoPath = file.path;
-    }
-    if (arquivo == "arquivoComprovanteResidencia") {
-      widget.arquivoComprovanteResidenciaUint8 = fileReturn;
-      widget.arquivoComprovanteResidenciaPath = file.path;
-    }
-    if (arquivo == "arquivoDeclaracaoEscolar") {
-      widget.arquivoDeclaracaoEscolarUint8 = fileReturn;
-      widget.arquivoDeclaracaoEscolarPath = file.path;
-    }
-
     setState(() {
 
     });
